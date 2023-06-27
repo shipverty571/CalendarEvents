@@ -6,12 +6,12 @@
 public class DayEvent
 {
     /// <summary>
-    /// Создает экземпляр класса <see cref="DayEvent"/>.
+    /// Создает экземпляр класса <see cref="DayEvent" />.
     /// </summary>
     /// <param name="title">Имя события.</param>
     /// <param name="start">Время начала события события.</param>
     /// <param name="end">Время конца события события.</param>
-    public DayEvent(string title, DateTime start, DateTime end)
+    public DayEvent(string title, TimeOnly start, TimeOnly end)
     {
         Title = title;
         TimeOfStart = start;
@@ -22,7 +22,7 @@ public class DayEvent
     /// Возвращает и задает название события.
     /// </summary>
     public string Title { get; set; }
-    
+
     /// <summary>
     /// Возвращает и задает описание события.
     /// </summary>
@@ -31,11 +31,10 @@ public class DayEvent
     /// <summary>
     /// Возвращает и задает время начала события.
     /// </summary>
-    public DateTime TimeOfStart { get; set; }
+    public TimeOnly TimeOfStart { get; set; }
 
     /// <summary>
     /// Возвращает и задает время конца события.
     /// </summary>
-    public DateTime TimeOfEnd { get; set; }
-
+    public TimeOnly TimeOfEnd { get; set; }
 }
