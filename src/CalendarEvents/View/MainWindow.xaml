@@ -13,10 +13,37 @@
     <Window.Resources>
         <ResourceDictionary>
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+            <converters:IntToMonthConverter x:Key="IntToMonthConverter"/>
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
-        <ItemsControl ItemsSource="{Binding MonthDays}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+            <Button
+                Width="50px"
+                Height="25px"
+                Margin="3px"
+                Command="{Binding SelectNextMonth}"
+                Content="Next"/>
+            <Button
+                Width="50px"
+                Height="25px"
+                Margin="3px"
+                Command="{Binding SelectPrevMonth}"
+                Content="Prev"/>
+            <TextBlock
+                Margin="3px"
+                VerticalAlignment="Center"
+                Text="{Binding CurrentDate.Month, Converter={StaticResource IntToMonthConverter}}"/>
+            <TextBlock
+                Margin="3px"
+                VerticalAlignment="Center"
+                Text="{Binding CurrentDate.Year}"/>
+        </StackPanel>
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding MonthDays}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Columns="7" Rows="6"/>
@@ -24,9 +51,10 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding CalendarDay.Date.Day}" 
-                               Visibility="{Binding IsDateOfMonth, Converter={StaticResource BoolToVisibilityConverter}}"
-                               Background="Aqua"/>
+                    <TextBlock
+                        Background="Aqua"
+                        Text="{Binding CalendarDay.Date.Day}"
+                        Visibility="{Binding IsDateOfMonth, Converter={StaticResource BoolToVisibilityConverter}}"/>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
