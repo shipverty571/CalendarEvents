@@ -14,6 +14,11 @@ public class CalendarDay
         Date = date;
         Events = new List<DayEvent>();
     }
+
+    public CalendarDay()
+    {
+        
+    }
     
     /// <summary>
     /// Возвращает и задает дату.
@@ -24,4 +29,5 @@ public class CalendarDay
     /// Возвращает и задает события.
     /// </summary>
     public List<DayEvent> Events { get; set; }
+    
 }
