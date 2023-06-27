@@ -29,4 +29,5 @@ public class CalendarDay
     /// Возвращает и задает события.
     /// </summary>
     public List<DayEvent> Events { get; set; }
+    
 }

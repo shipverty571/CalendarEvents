@@ -15,16 +15,20 @@ public class MainVM : ObservableObject
 
     private void SetMonthDays()
     {
-        MonthDays = new ObservableCollection<CalendarDay>();
+        MonthDays = new ObservableCollection<CalendarDayVM>();
         for (int i = 0; i < (int)CurrentDate.DayOfWeek + 1; i++)
         {
-            MonthDays.Add(new CalendarDay());
+            var day = new CalendarDayVM();
+            MonthDays.Add(day);
         }
-        for (var date = new DateTime(CurrentDate.Year, CurrentDate.Month, 1);
-             date.Month == CurrentDate.Month;
-             date = date.AddDays(1))
+        for (
+            var date = new DateTime(CurrentDate.Year, CurrentDate.Month, 1); 
+            date.Month == CurrentDate.Month;
+            date = date.AddDays(1))
         {
-            MonthDays.Add(new CalendarDay(DateOnly.FromDateTime(date)));
+            var day = new CalendarDayVM();
+            day.CalendarDay = new CalendarDay(DateOnly.FromDateTime(date));
+            MonthDays.Add(day);
         }
     }
 
@@ -41,5 +45,5 @@ public class MainVM : ObservableObject
         }
     }
 
-    public ObservableCollection<CalendarDay> MonthDays { get; set; }
+    public ObservableCollection<CalendarDayVM> MonthDays { get; set; }
 }
