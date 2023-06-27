@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using Model;
 
 namespace ViewModel;
@@ -15,17 +16,38 @@ public class MainVM : ObservableObject
     private DateOnly _currentDate;
 
     /// <summary>
+    /// Коллекция дней в месяце.
+    /// </summary>
+    private ObservableCollection<CalendarDayVM> _monthDays;
+
+    /// <summary>
     /// Создает экземпляр класса <see cref="MainVM" />.
     /// </summary>
     public MainVM()
     {
         CurrentDate = DateOnly.FromDateTime(DateTime.Now);
+        SelectNextMonth = new RelayCommand(NextMonth);
+        SelectPrevMonth = new RelayCommand(PrevMonth);
     }
 
     /// <summary>
     /// Возвращает и задает коллекцию дней в месяце.
     /// </summary>
-    public ObservableCollection<CalendarDayVM> MonthDays { get; set; }
+    public ObservableCollection<CalendarDayVM> MonthDays
+    {
+        get => _monthDays;
+        set => SetProperty(ref _monthDays, value);
+    }
+    
+    /// <summary>
+    /// Возвращает команду смены месяца на следующий.
+    /// </summary>
+    public RelayCommand SelectNextMonth { get; }
+    
+    /// <summary>
+    /// Возвращает команду смены месяца на предыдущий.
+    /// </summary>
+    public RelayCommand SelectPrevMonth { get; }
 
     /// <summary>
     /// Возвращает и задает текущую дату.
@@ -37,6 +59,7 @@ public class MainVM : ObservableObject
         {
             _currentDate = value;
             SetMonthDays();
+            OnPropertyChanged();
         }
     }
 
@@ -46,13 +69,17 @@ public class MainVM : ObservableObject
     private void SetMonthDays()
     {
         MonthDays = new ObservableCollection<CalendarDayVM>();
-        for (var i = 0; i < (int)CurrentDate.DayOfWeek + 1; i++)
+        var startDayOfWeek = (int)CurrentDate.DayOfWeek + 1;
+        if (startDayOfWeek != 7)
         {
-            var day = new CalendarDayVM();
-            day.IsDateOfMonth = false;
-            MonthDays.Add(day);
+            for (var i = 0; i < startDayOfWeek; i++)
+            {
+                var day = new CalendarDayVM();
+                day.IsDateOfMonth = false;
+                MonthDays.Add(day);
+            }
         }
-
+        
         for (
             var date = new DateTime(CurrentDate.Year, CurrentDate.Month, 1);
             date.Month == CurrentDate.Month;
@@ -63,5 +90,31 @@ public class MainVM : ObservableObject
             day.IsDateOfMonth = true;
             MonthDays.Add(day);
         }
+    }
+
+    /// <summary>
+    /// Меняет текущий месяц.
+    /// </summary>
+    /// <param name="count">Число, характеризующее, на какое количество месяцев изменить.</param>
+    private void ChangeMonth(int count)
+    {
+        var changedMonth = CurrentDate.AddMonths(count);
+        CurrentDate = changedMonth;
+    }
+    
+    /// <summary>
+    /// Изменяет текущий месяц на следующий.
+    /// </summary>
+    private void NextMonth()
+    {
+        ChangeMonth(1);
+    }
+
+    /// <summary>
+    /// Изменяет текущий месяц на предыдущий.
+    /// </summary>
+    private void PrevMonth()
+    {
+        ChangeMonth(-1);
     }
 }

@@ -26,12 +26,14 @@
                 Width="50px"
                 Height="25px"
                 Margin="3px"
-                Content="Up"/>
+                Command="{Binding SelectNextMonth}"
+                Content="Next"/>
             <Button
                 Width="50px"
                 Height="25px"
                 Margin="3px"
-                Content="Down"/>
+                Command="{Binding SelectPrevMonth}"
+                Content="Prev"/>
             <TextBlock
                 Margin="3px"
                 VerticalAlignment="Center"
