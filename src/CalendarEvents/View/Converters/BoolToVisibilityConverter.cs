@@ -24,7 +24,7 @@ public class BoolToVisibilityConverter : IValueConverter
         object parameter,
         CultureInfo culture)
     {
-        return !(bool)value ? Visibility.Visible : Visibility.Collapsed;
+        return (bool)value ? Visibility.Visible : Visibility.Collapsed;
     }
 
     /// <summary>

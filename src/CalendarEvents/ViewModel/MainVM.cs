@@ -19,6 +19,7 @@ public class MainVM : ObservableObject
         for (int i = 0; i < (int)CurrentDate.DayOfWeek + 1; i++)
         {
             var day = new CalendarDayVM();
+            day.IsDateOfMonth = false;
             MonthDays.Add(day);
         }
         for (
@@ -28,6 +29,7 @@ public class MainVM : ObservableObject
         {
             var day = new CalendarDayVM();
             day.CalendarDay = new CalendarDay(DateOnly.FromDateTime(date));
+            day.IsDateOfMonth = true;
             MonthDays.Add(day);
         }
     }
