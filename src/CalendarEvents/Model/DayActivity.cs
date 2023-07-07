@@ -3,19 +3,17 @@
 /// <summary>
 /// Хранит информацию о событии.
 /// </summary>
-public class DayEvent
+public class DayActivity : IDayEvent
 {
     /// <summary>
-    /// Создает экземпляр класса <see cref="DayEvent" />.
+    /// Создает экземпляр класса <see cref="DayActivity" />.
     /// </summary>
     /// <param name="title">Имя события.</param>
     /// <param name="start">Время начала события события.</param>
-    /// <param name="end">Время конца события события.</param>
-    public DayEvent(string title, TimeOnly start, TimeOnly end)
+    public DayActivity(string title, TimeOnly start)
     {
         Title = title;
-        TimeOfStart = start;
-        TimeOfEnd = end;
+        TimeStart = start;
     }
 
     /// <summary>
@@ -31,10 +29,5 @@ public class DayEvent
     /// <summary>
     /// Возвращает и задает время начала события.
     /// </summary>
-    public TimeOnly TimeOfStart { get; set; }
-
-    /// <summary>
-    /// Возвращает и задает время конца события.
-    /// </summary>
-    public TimeOnly TimeOfEnd { get; set; }
+    public TimeOnly TimeStart { get; set; }
 }
