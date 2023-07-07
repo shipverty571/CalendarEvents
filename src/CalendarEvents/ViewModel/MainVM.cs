@@ -69,7 +69,7 @@ public class MainVM : ObservableObject
     private void SetMonthDays()
     {
         MonthDays = new ObservableCollection<CalendarDayVM>();
-        var startDayOfWeek = (int)CurrentDate.DayOfWeek + 1;
+        var startDayOfWeek = (int)CurrentDate.DayOfWeek;
         if (startDayOfWeek != 7)
         {
             for (var i = 0; i < startDayOfWeek; i++)

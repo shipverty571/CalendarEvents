@@ -12,7 +12,6 @@ public class CalendarDay
     public CalendarDay(DateOnly date)
     {
         Date = date;
-        Events = new List<DayEvent>();
     }
 
     public CalendarDay()
@@ -26,8 +25,7 @@ public class CalendarDay
     public DateOnly Date { get; set; }
     
     /// <summary>
-    /// Возвращает и задает события.
+    /// Хранит события, назначенные на день.
     /// </summary>
-    public List<DayEvent> Events { get; set; }
-    
+    public IDayEvent DayEvents { get; set; }
 }

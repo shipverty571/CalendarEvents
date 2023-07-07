@@ -7,9 +7,10 @@
     xmlns:local="clr-namespace:View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="MainWindow"
-    Width="800"
-    Height="450"
-    mc:Ignorable="d">
+    Width="1000"
+    Height="700"
+    mc:Ignorable="d"
+    WindowStartupLocation="CenterScreen">
     <Window.Resources>
         <ResourceDictionary>
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
@@ -51,10 +52,27 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock
-                        Background="Aqua"
-                        Text="{Binding CalendarDay.Date.Day}"
-                        Visibility="{Binding IsDateOfMonth, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                    <Button Padding="0">
+                        <Button.Template>
+                            <ControlTemplate>
+                                <Grid Margin="0" Visibility="{Binding IsDateOfMonth, Converter={StaticResource BoolToVisibilityConverter}}" Background="Aqua">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <TextBlock
+                                        Grid.Row="0"
+                                        Margin="3px"
+                                        Text="{Binding CalendarDay.Date.Day}" />
+                                    <StackPanel Grid.Row="2">
+                                        <TextBlock Text="Мероприятия: " Margin="3px" />
+                                        <TextBlock Text="Задачи: " Margin="3px" />
+                                    </StackPanel>
+                                </Grid>
+                            </ControlTemplate>
+                        </Button.Template>
+                    </Button>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
