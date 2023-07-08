@@ -20,6 +20,8 @@ public class CalendarVM : ObservableObject
     /// </summary>
     private ObservableCollection<CalendarDayVM> _monthDays;
 
+    public CalendarDayVM _selectedDay;
+
     /// <summary>
     /// Создает экземпляр класса <see cref="MainVM" />.
     /// </summary>
@@ -29,6 +31,18 @@ public class CalendarVM : ObservableObject
         CurrentDate = DateOnly.FromDateTime(DateTime.Now);
         SelectNextMonth = new RelayCommand(NextMonth);
         SelectPrevMonth = new RelayCommand(PrevMonth);
+        DayInfoCommand = new RelayCommand(DayInfo);
+    }
+
+    public CalendarDayVM SelectedDay
+    {
+        get => _selectedDay;
+        set
+        {
+            _selectedDay = value;
+            NavigationService.NavigateTo<DayInfoVM>();
+            OnPropertyChanged();
+        }
     }
 
     public INavigationService NavigationService

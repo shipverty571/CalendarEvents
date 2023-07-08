@@ -26,6 +26,7 @@ public partial class App : Application
         services.AddSingleton<CalendarDayVM>();
         services.AddSingleton<AddDayEventVM>();
         services.AddSingleton<CalendarVM>();
+        services.AddSingleton<CalendarDayVM>();
         services.AddSingleton<INavigationService, NavigationService>();
         services.AddSingleton<Func<Type, ObservableObject>>(serviceProvider => viewModelType =>
             (ObservableObject)serviceProvider.GetRequiredService(viewModelType));

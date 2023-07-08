@@ -7,6 +7,11 @@
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Button Grid.Column="0" Content="Back" Command="{Binding BackToCalendarCommand}"/>
+        <TextBlock Grid.Column="1" Text="{Binding DateNumber, UpdateSourceTrigger=PropertyChanged}" />
     </Grid>
 </UserControl>
