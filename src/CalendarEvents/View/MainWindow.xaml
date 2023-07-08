@@ -9,8 +9,8 @@
     Title="MainWindow"
     Width="1000"
     Height="700"
-    mc:Ignorable="d"
-    WindowStartupLocation="CenterScreen">
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
     <Window.Resources>
         <ResourceDictionary>
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
@@ -18,63 +18,69 @@
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Orientation="Horizontal">
-            <Button
-                Width="50px"
-                Height="25px"
-                Margin="3px"
-                Command="{Binding SelectNextMonth}"
-                Content="Next"/>
-            <Button
-                Width="50px"
-                Height="25px"
-                Margin="3px"
-                Command="{Binding SelectPrevMonth}"
-                Content="Prev"/>
-            <TextBlock
-                Margin="3px"
-                VerticalAlignment="Center"
-                Text="{Binding CurrentDate.Month, Converter={StaticResource IntToMonthConverter}}"/>
-            <TextBlock
-                Margin="3px"
-                VerticalAlignment="Center"
-                Text="{Binding CurrentDate.Year}"/>
-        </StackPanel>
-        <ItemsControl Grid.Row="1" ItemsSource="{Binding MonthDays}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <UniformGrid Columns="7" Rows="6"/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <Button Padding="0">
-                        <Button.Template>
-                            <ControlTemplate>
-                                <Grid Margin="0" Visibility="{Binding IsDateOfMonth, Converter={StaticResource BoolToVisibilityConverter}}" Background="Aqua">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition />
-                                        <RowDefinition Height="Auto" />
-                                    </Grid.RowDefinitions>
-                                    <TextBlock
-                                        Grid.Row="0"
-                                        Margin="3px"
-                                        Text="{Binding CalendarDay.Date.Day}" />
-                                    <StackPanel Grid.Row="2">
-                                        <TextBlock Text="Мероприятия: " Margin="3px" />
-                                        <TextBlock Text="Задачи: " Margin="3px" />
-                                    </StackPanel>
-                                </Grid>
-                            </ControlTemplate>
-                        </Button.Template>
-                    </Button>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+        <ContentControl Content="{Binding NavigationService.CurrentView}" />
+        <!--<Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <Button
+                    Width="50px"
+                    Height="25px"
+                    Margin="3px"
+                    Command="{Binding SelectNextMonth}"
+                    Content="Next"/>
+                <Button
+                    Width="50px"
+                    Height="25px"
+                    Margin="3px"
+                    Command="{Binding SelectPrevMonth}"
+                    Content="Prev"/>
+                <TextBlock
+                    Margin="3px"
+                    VerticalAlignment="Center"
+                    Text="{Binding CurrentDate.Month, Converter={StaticResource IntToMonthConverter}}"/>
+                <TextBlock
+                    Margin="3px"
+                    VerticalAlignment="Center"
+                    Text="{Binding CurrentDate.Year}"/>
+            </StackPanel>
+            <ItemsControl Grid.Row="1" ItemsSource="{Binding MonthDays}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="7" Rows="6"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Padding="0">
+                            <Button.Template>
+                                <ControlTemplate>
+                                    <Grid
+                                        Margin="0"
+                                        Background="Aqua"
+                                        Visibility="{Binding IsDateOfMonth, Converter={StaticResource BoolToVisibilityConverter}}">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock
+                                            Grid.Row="0"
+                                            Margin="3px"
+                                            Text="{Binding CalendarDay.Date.Day}"/>
+                                        <StackPanel Grid.Row="2">
+                                            <TextBlock Margin="3px" Text="Мероприятия: "/>
+                                            <TextBlock Margin="3px" Text="Задачи: "/>
+                                        </StackPanel>
+                                    </Grid>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </Grid>-->
     </Grid>
 </Window>

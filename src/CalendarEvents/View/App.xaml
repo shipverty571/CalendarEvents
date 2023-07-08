@@ -2,8 +2,17 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:View"
-             StartupUri="MainWindow.xaml">
+             xmlns:viewModel="clr-namespace:ViewModel;assembly=ViewModel"
+             xmlns:control="clr-namespace:View.Controls">
     <Application.Resources>
-         
+         <DataTemplate DataType="{x:Type TypeName=viewModel:DayInfoVM}">
+             <control:DayInfoControl />
+         </DataTemplate>
+        <DataTemplate DataType="{x:Type TypeName=viewModel:AddDayEventVM}">
+             <control:AddDayEventControl />
+         </DataTemplate>
+        <DataTemplate DataType="{x:Type TypeName=viewModel:CalendarVM}">
+            <control:CalendarControl />
+        </DataTemplate>
     </Application.Resources>
 </Application>
