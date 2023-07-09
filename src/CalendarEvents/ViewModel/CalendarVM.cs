@@ -20,7 +20,7 @@ public class CalendarVM : ObservableObject
     /// </summary>
     private ObservableCollection<CalendarDayVM> _monthDays;
 
-    public CalendarDayVM _selectedDay;
+    private CalendarDayVM _selectedDay;
 
     /// <summary>
     /// Создает экземпляр класса <see cref="MainVM" />.
@@ -40,8 +40,11 @@ public class CalendarVM : ObservableObject
         set
         {
             _selectedDay = value;
-            NavigationService.NavigateTo<DayInfoVM>();
             OnPropertyChanged();
+            if (value.CalendarDay.Date != null)
+            {
+                NavigationService.NavigateTo<DayInfoVM>();
+            }
         }
     }
 

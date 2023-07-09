@@ -19,6 +19,8 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Orientation="Horizontal">
@@ -43,8 +45,41 @@
                 VerticalAlignment="Center"
                 Text="{Binding CurrentDate.Year}"/>
         </StackPanel>
+        <Separator Grid.Row="1" Margin="3px"/>
+        <UniformGrid Grid.Row="2" Columns="7">
+            <TextBlock
+                Margin="1px"
+                Text="Monday"
+                TextAlignment="Center"/>
+            <TextBlock
+                Margin="1px"
+                Text="Tuesday"
+                TextAlignment="Center"/>
+            <TextBlock
+                Margin="1px"
+                Text="Wednesday"
+                TextAlignment="Center"/>
+            <TextBlock
+                Margin="1px"
+                Text="Thursday"
+                TextAlignment="Center"/>
+            <TextBlock
+                Margin="1px"
+                Text="Friday"
+                TextAlignment="Center"/>
+            <TextBlock
+                Margin="1px"
+                Text="Saturday"
+                TextAlignment="Center"/>
+            <TextBlock
+                Margin="1px"
+                Text="Sunday"
+                TextAlignment="Center"/>
+        </UniformGrid>
         <ListBox
-            Grid.Row="1"
+            Grid.Row="3"
+            Margin="3px"
+            BorderThickness="0"
             ItemsSource="{Binding MonthDays}"
             SelectedItem="{Binding SelectedDay, UpdateSourceTrigger=PropertyChanged}">
             <ListBox.ItemsPanel>
@@ -56,8 +91,7 @@
                 <DataTemplate>
                     <Grid
                         Margin="0"
-                        Background="Aqua"
-                        IsHitTestVisible="{Binding IsDateOfMonth}"
+                        Background="LightGray"
                         Visibility="{Binding IsDateOfMonth, Converter={StaticResource BoolToVisibilityConverter}}">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
@@ -77,6 +111,12 @@
             </ListBox.ItemTemplate>
             <ListBox.ItemContainerStyle>
                 <Style TargetType="ListBoxItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                    <Setter Property="Padding" Value="0"/>
+                    <Setter Property="BorderBrush" Value="Black"/>
+                    <Setter Property="BorderThickness" Value="0 1 0 0"/>
+                    <Setter Property="Margin" Value="0"/>
                     <Style.Triggers>
                         <DataTrigger Binding="{Binding IsDateOfMonth}" Value="false">
                             <Setter Property="IsEnabled" Value="false"/>
