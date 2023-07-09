@@ -54,32 +54,36 @@
             </ListBox.ItemsPanel>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Button Command="{Binding Path=DataContext.DayInfoCommand, ElementName=CalendarUserControl}">
-                        <Button.Template>
-                            <ControlTemplate>
-                                <Grid
-                                    Margin="0"
-                                    Background="Aqua"
-                                    Visibility="{Binding IsDateOfMonth, Converter={StaticResource BoolToVisibilityConverter}}">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition/>
-                                        <RowDefinition Height="Auto"/>
-                                    </Grid.RowDefinitions>
-                                    <TextBlock
-                                        Grid.Row="0"
-                                        Margin="3px"
-                                        Text="{Binding CalendarDay.Date.Day}"/>
-                                    <StackPanel Grid.Row="2">
-                                        <TextBlock Margin="3px" Text="Мероприятия: "/>
-                                        <TextBlock Margin="3px" Text="Задачи: "/>
-                                    </StackPanel>
-                                </Grid>
-                            </ControlTemplate>
-                        </Button.Template>
-                    </Button>
+                    <Grid
+                        Margin="0"
+                        Background="Aqua"
+                        IsHitTestVisible="{Binding IsDateOfMonth}"
+                        Visibility="{Binding IsDateOfMonth, Converter={StaticResource BoolToVisibilityConverter}}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock
+                            Grid.Row="0"
+                            Margin="3px"
+                            Text="{Binding CalendarDay.Date.Day}"/>
+                        <StackPanel Grid.Row="2">
+                            <TextBlock Margin="3px" Text="Мероприятия: "/>
+                            <TextBlock Margin="3px" Text="Задачи: "/>
+                        </StackPanel>
+                    </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding IsDateOfMonth}" Value="false">
+                            <Setter Property="IsEnabled" Value="false"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ListBox.ItemContainerStyle>
         </ListBox>
     </Grid>
 </UserControl>
