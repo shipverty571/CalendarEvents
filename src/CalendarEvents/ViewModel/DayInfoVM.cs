@@ -9,31 +9,43 @@ public class DayInfoVM : ObservableObject
     private int _date;
     
     private INavigationService _navigationService;
+
+    private IDialogService _dialogService;
     
-    public DayInfoVM(INavigationService navigationService, CalendarVM calendarVM)
+    public DayInfoVM(INavigationService navigationService, IDialogService dialogService, CalendarVM calendarVM)
     {
-        CalendarVM = calendarVM;
         NavigationService = navigationService;
+        DialogService = dialogService;
+        CalendarVM = calendarVM;
         BackToCalendarCommand = new RelayCommand(BackToCalendar);
+        OpenEventsManagementCommand = new RelayCommand(OpenEventsManagement);
     }
     
-    public CalendarVM CalendarVM { get; }
+    public CalendarVM CalendarVM { get; set; }
     
+    public RelayCommand BackToCalendarCommand { get; }
+
+    public RelayCommand OpenEventsManagementCommand { get;  }
+
     public INavigationService NavigationService
     {
         get => _navigationService;
         set => SetProperty(ref _navigationService, value);
     }
 
-    public int DateNumber
+    public IDialogService DialogService
     {
-        get => CalendarVM.SelectedDay.CalendarDay.Date.Day;
+        get => _dialogService;
+        set => SetProperty(ref _dialogService, value);
     }
     
-    public RelayCommand BackToCalendarCommand { get; }
-
     private void BackToCalendar()
     {
         NavigationService.NavigateTo<CalendarVM>();
+    }
+
+    private void OpenEventsManagement()
+    {
+        DialogService.ShowDialog<EventsManagementVM>();
     }
 }

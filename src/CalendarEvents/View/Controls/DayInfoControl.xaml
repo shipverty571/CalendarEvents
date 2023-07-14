@@ -25,36 +25,46 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Separator Grid.Row="1" Grid.ColumnSpan="3" Margin="3px" />
+        <Separator
+            Grid.Row="1"
+            Grid.ColumnSpan="3"
+            Margin="3px"/>
         <DockPanel Grid.Row="2" Grid.Column="0">
-            <TextBlock
-                Margin="3px"
-                DockPanel.Dock="Top"
-                Text="Events"/>
-
-            <Grid DockPanel.Dock="Bottom">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <Button
-                    Grid.Column="0"
-                    Height="25px"
+            <DockPanel DockPanel.Dock="Top">
+                <TextBlock
                     Margin="3px"
-                    Content="Add"/>
-                <Button
-                    Grid.Column="1"
-                    Height="25px"
-                    Margin="3px"
-                    Content="Edit"/>
-                <Button
-                    Grid.Column="2"
-                    Height="25px"
-                    Margin="3px"
-                    Content="Remove"/>
-            </Grid>
-            <ListBox Margin="3px"/>
+                    VerticalAlignment="Center"
+                    DockPanel.Dock="Left"
+                    Text="Events"/>
+                <StackPanel
+                    HorizontalAlignment="Right"
+                    DockPanel.Dock="Right"
+                    Orientation="Horizontal">
+                    <Button
+                        Width="25px"
+                        Height="25px"
+                        Margin="3px"
+                        Command="{Binding OpenEventsManagementCommand}"
+                        Content="+"/>
+                    <Button
+                        Width="25px"
+                        Height="25px"
+                        Margin="3px"
+                        Content="E"/>
+                    <Button
+                        Width="25px"
+                        Height="25px"
+                        Margin="3px"
+                        Content="-"/>
+                </StackPanel>
+            </DockPanel>
+            <ListBox Margin="3px" ItemsSource="{Binding CalendarVM.SelectedDay.CalendarDay.DayEvents, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Title}"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </DockPanel>
         <GridSplitter
             Grid.Row="2"
@@ -62,22 +72,27 @@
             Width="3px"
             HorizontalAlignment="Center"
             VerticalAlignment="Stretch"/>
-        <StackPanel Grid.Row="2" Grid.Column="2" Orientation="Vertical">
-            <TextBlock Text="test" Margin="3px" />
-            <TextBox Margin="3px" />
-            <TextBlock Text="test" Margin="3px" />
-            <TextBox Margin="3px" />
-            <TextBlock Text="test" Margin="3px" />
-            <TextBox Margin="3px" />
+        <StackPanel
+            Grid.Row="2"
+            Grid.Column="2"
+            Orientation="Vertical">
+            <TextBlock Margin="3px" Text="test"/>
+            <TextBox Margin="3px"/>
+            <TextBlock Margin="3px" Text="test"/>
+            <TextBox Margin="3px"/>
+            <TextBlock Margin="3px" Text="test"/>
+            <TextBox Margin="3px"/>
         </StackPanel>
-        <StackPanel Orientation="Horizontal">
+        <StackPanel
+            Grid.Row="0"
+            Grid.Column="0"
+            Orientation="Horizontal">
             <Button
-                Grid.Column="0"
-                Width="50px"
+                Width="25px"
                 Height="25px"
                 Margin="3px"
                 Command="{Binding BackToCalendarCommand}"
-                Content="Back"/>
+                Content="&lt;-"/>
             <TextBlock
                 Margin="3px"
                 VerticalAlignment="Center"

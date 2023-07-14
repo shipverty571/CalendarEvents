@@ -1,4 +1,6 @@
-﻿namespace Model;
+﻿using System.Collections.ObjectModel;
+
+namespace Model;
 
 /// <summary>
 /// Хранит информацию о дне в календаре.
@@ -23,9 +25,9 @@ public class CalendarDay
     /// Возвращает и задает дату.
     /// </summary>
     public DateOnly Date { get; set; }
-    
+
     /// <summary>
     /// Хранит события, назначенные на день.
     /// </summary>
-    public IDayEvent DayEvents { get; set; }
+    public ObservableCollection<IDayEvent> DayEvents { get; set; } = new ObservableCollection<IDayEvent>();
 }

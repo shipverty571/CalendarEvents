@@ -15,6 +15,8 @@ public class CalendarVM : ObservableObject
 
     private INavigationService _navigationService;
 
+    private IDialogService _dialogService;
+
     /// <summary>
     /// Коллекция дней в месяце.
     /// </summary>
@@ -25,9 +27,10 @@ public class CalendarVM : ObservableObject
     /// <summary>
     /// Создает экземпляр класса <see cref="MainVM" />.
     /// </summary>
-    public CalendarVM(INavigationService navigationService)
+    public CalendarVM(INavigationService navigationService, IDialogService dialogService)
     {
         NavigationService = navigationService;
+        DialogService = dialogService;
         CurrentDate = DateOnly.FromDateTime(DateTime.Now);
         SelectNextMonth = new RelayCommand(NextMonth);
         SelectPrevMonth = new RelayCommand(PrevMonth);
@@ -48,6 +51,12 @@ public class CalendarVM : ObservableObject
         }
     }
 
+    public IDialogService DialogService
+    {
+        get => _dialogService;
+        set => SetProperty(ref _dialogService, value);
+    }
+    
     public INavigationService NavigationService
     {
         get => _navigationService;
@@ -91,7 +100,7 @@ public class CalendarVM : ObservableObject
 
     private void DayInfo()
     {
-        NavigationService.NavigateTo<DayInfoVM>();
+        /*NavigationService.NavigateTo<DayInfoVM>();*/
     }
 
     /// <summary>

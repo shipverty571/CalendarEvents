@@ -44,6 +44,7 @@
                 Margin="3px"
                 VerticalAlignment="Center"
                 Text="{Binding CurrentDate.Year}"/>
+            
         </StackPanel>
         <Separator Grid.Row="1" Margin="3px"/>
         <UniformGrid Grid.Row="2" Columns="7">
