@@ -8,6 +8,8 @@ namespace ViewModel;
 
 public class CalendarVM : ObservableObject
 {
+    private const int MaxDaysOfWeek = 7;
+    
     /// <summary>
     /// Текущая дата.
     /// </summary>
@@ -111,7 +113,7 @@ public class CalendarVM : ObservableObject
         MonthDays = new ObservableCollection<CalendarDayVM>();
         var startDayOfWeek =
             (int)new DateTime(CurrentDate.Year, CurrentDate.Month, 1).DayOfWeek;
-        if (startDayOfWeek != 7)
+        if (startDayOfWeek != MaxDaysOfWeek)
         {
             for (var i = 1; i < startDayOfWeek; i++)
             {

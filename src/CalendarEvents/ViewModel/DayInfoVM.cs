@@ -6,12 +6,16 @@ namespace ViewModel;
 
 public class DayInfoVM : ObservableObject
 {
+    private const int DialogHeight = 200;
+
+    private const int DialogWidth = 400;
+    
     private int _date;
     
     private INavigationService _navigationService;
 
     private IDialogService _dialogService;
-    
+
     public DayInfoVM(INavigationService navigationService, IDialogService dialogService, CalendarVM calendarVM)
     {
         NavigationService = navigationService;
@@ -46,6 +50,8 @@ public class DayInfoVM : ObservableObject
 
     private void OpenEventsManagement()
     {
+        DialogService.Height = DialogHeight;
+        DialogService.Width = DialogWidth;
         DialogService.ShowDialog<EventsManagementVM>();
     }
 }
