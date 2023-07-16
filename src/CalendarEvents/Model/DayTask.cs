@@ -3,7 +3,7 @@
 /// <summary>
 /// Хранит информацию о задаче.
 /// </summary>
-public class DayTask : IDayEvent
+public class DayTask
 {
     /// <summary>
     /// Создает экземпляр класса <see cref="DayTask"/>.

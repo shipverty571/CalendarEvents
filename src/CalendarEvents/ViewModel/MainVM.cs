@@ -8,20 +8,18 @@ namespace ViewModel;
 /// </summary>
 public class MainVM : ObservableObject
 {
-    private INavigationService _navigationService;
-
     /// <summary>
     /// Создает экземпляр класса <see cref="MainVM" />.
     /// </summary>
+    /// <param name="navigationService">Сервис навигации пользовательских элементов управления.</param>
     public MainVM(INavigationService navigationService)
     {
         NavigationService = navigationService;
         NavigationService.NavigateTo<CalendarVM>();
     }
 
-    public INavigationService NavigationService
-    {
-        get => _navigationService;
-        set => SetProperty(ref _navigationService, value);
-    }
+    /// <summary>
+    /// Возвращает и задает сервис навигации пользовательских элементов управления.
+    /// </summary>
+    public INavigationService NavigationService { get; set; }
 }

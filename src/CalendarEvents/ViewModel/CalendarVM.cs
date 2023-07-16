@@ -6,30 +6,41 @@ using ViewModel.Services;
 
 namespace ViewModel;
 
+/// <summary>
+/// ViewModel для CalendarControl.
+/// </summary>
 public class CalendarVM : ObservableObject
 {
+    /// <summary>
+    /// Хранит количество дней в неделе.
+    /// </summary>
     private const int MaxDaysOfWeek = 7;
-    
+
     /// <summary>
     /// Текущая дата.
     /// </summary>
     private DateOnly _currentDate;
-
-    private INavigationService _navigationService;
-
-    private IDialogService _dialogService;
 
     /// <summary>
     /// Коллекция дней в месяце.
     /// </summary>
     private ObservableCollection<CalendarDayVM> _monthDays;
 
+    /// <summary>
+    /// Выбранный день.
+    /// </summary>
     private CalendarDayVM _selectedDay;
 
     /// <summary>
-    /// Создает экземпляр класса <see cref="MainVM" />.
+    /// Создает экземпляр класса <see cref="CalendarVM" />.
     /// </summary>
-    public CalendarVM(INavigationService navigationService, IDialogService dialogService, EventStore eventStore)
+    /// <param name="navigationService">Сервис навигации пользовательских элементов управления.</param>
+    /// <param name="dialogService">Сервис диалоговых окон.</param>
+    /// <param name="eventStore">Хранилище задач.</param>
+    public CalendarVM(
+        INavigationService navigationService,
+        IDialogService dialogService,
+        EventStore eventStore)
     {
         NavigationService = navigationService;
         DialogService = dialogService;
@@ -37,11 +48,16 @@ public class CalendarVM : ObservableObject
         CurrentDate = DateOnly.FromDateTime(DateTime.Now);
         SelectNextMonth = new RelayCommand(NextMonth);
         SelectPrevMonth = new RelayCommand(PrevMonth);
-        DayInfoCommand = new RelayCommand(DayInfo);
     }
-    
+
+    /// <summary>
+    /// Возвращает и задает хранилище задач.
+    /// </summary>
     public EventStore EventStore { get; set; }
 
+    /// <summary>
+    /// Возвращает и задает выбранный день.
+    /// </summary>
     public CalendarDayVM SelectedDay
     {
         get => _selectedDay;
@@ -49,24 +65,19 @@ public class CalendarVM : ObservableObject
         {
             _selectedDay = value;
             OnPropertyChanged();
-            if (value.CalendarDay.Date != null)
-            {
-                NavigationService.NavigateTo<DayInfoVM>();
-            }
+            if (value.CalendarDay.Date != null) NavigationService.NavigateTo<DayInfoVM>();
         }
     }
 
-    public IDialogService DialogService
-    {
-        get => _dialogService;
-        set => SetProperty(ref _dialogService, value);
-    }
-    
-    public INavigationService NavigationService
-    {
-        get => _navigationService;
-        set => SetProperty(ref _navigationService, value);
-    }
+    /// <summary>
+    /// Возвращает и задает сервис диалоговых окон.
+    /// </summary>
+    public IDialogService DialogService { get; set; }
+
+    /// <summary>
+    /// Возвращает и задает сервис навигации пользовательских элементов управления.
+    /// </summary>
+    public INavigationService NavigationService { get; set; }
 
     /// <summary>
     /// Возвращает и задает коллекцию дней в месяце.
@@ -76,14 +87,12 @@ public class CalendarVM : ObservableObject
         get => _monthDays;
         set => SetProperty(ref _monthDays, value);
     }
-    
-    public RelayCommand DayInfoCommand { get; }
-    
+
     /// <summary>
     /// Возвращает команду смены месяца на следующий.
     /// </summary>
     public RelayCommand SelectNextMonth { get; }
-    
+
     /// <summary>
     /// Возвращает команду смены месяца на предыдущий.
     /// </summary>
@@ -103,11 +112,6 @@ public class CalendarVM : ObservableObject
         }
     }
 
-    private void DayInfo()
-    {
-        /*NavigationService.NavigateTo<DayInfoVM>();*/
-    }
-
     /// <summary>
     /// Инициализирует коллекцию дней в месяце.
     /// </summary>
@@ -117,15 +121,13 @@ public class CalendarVM : ObservableObject
         var startDayOfWeek =
             (int)new DateTime(CurrentDate.Year, CurrentDate.Month, 1).DayOfWeek;
         if (startDayOfWeek != MaxDaysOfWeek)
-        {
             for (var i = 1; i < startDayOfWeek; i++)
             {
                 var day = new CalendarDayVM();
                 day.IsDateOfMonth = false;
                 MonthDays.Add(day);
             }
-        }
-        
+
         for (
             var date = new DateTime(CurrentDate.Year, CurrentDate.Month, 1);
             date.Month == CurrentDate.Month;
@@ -147,7 +149,7 @@ public class CalendarVM : ObservableObject
         var changedMonth = CurrentDate.AddMonths(count);
         CurrentDate = changedMonth;
     }
-    
+
     /// <summary>
     /// Изменяет текущий месяц на следующий.
     /// </summary>

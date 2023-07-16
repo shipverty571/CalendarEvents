@@ -25,9 +25,4 @@ public class CalendarDay
     /// Возвращает и задает дату.
     /// </summary>
     public DateOnly Date { get; set; }
-
-    /// <summary>
-    /// Хранит события, назначенные на день.
-    /// </summary>
-    public ObservableCollection<IDayEvent> DayEvents { get; set; } = new ObservableCollection<IDayEvent>();
 }

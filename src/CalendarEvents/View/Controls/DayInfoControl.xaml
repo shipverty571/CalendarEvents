@@ -50,15 +50,17 @@
                         Width="25px"
                         Height="25px"
                         Margin="3px"
-                        Content="E"/>
+                        Content="E"
+                        IsEnabled="{Binding IsSelected}"/>
                     <Button
                         Width="25px"
                         Height="25px"
                         Margin="3px"
-                        Content="-"/>
+                        Content="-"
+                        IsEnabled="{Binding IsSelected}"/>
                 </StackPanel>
             </DockPanel>
-            <ListBox Margin="3px" ItemsSource="{Binding CurrentEvents}">
+            <ListBox Margin="3px" ItemsSource="{Binding CurrentEvents}" SelectedItem="{Binding SelectedTask}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Title}"/>
@@ -76,12 +78,9 @@
             Grid.Row="2"
             Grid.Column="2"
             Orientation="Vertical">
-            <TextBlock Margin="3px" Text="test"/>
-            <TextBox Margin="3px"/>
-            <TextBlock Margin="3px" Text="test"/>
-            <TextBox Margin="3px"/>
-            <TextBlock Margin="3px" Text="test"/>
-            <TextBox Margin="3px"/>
+            <TextBlock Margin="3px" Text="Title:"/>
+            <TextBox Margin="3px" Text="{Binding SelectedTask.Title}"/>
+            
         </StackPanel>
         <StackPanel
             Grid.Row="0"

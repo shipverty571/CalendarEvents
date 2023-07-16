@@ -8,9 +8,6 @@
          <DataTemplate DataType="{x:Type TypeName=viewModel:DayInfoVM}">
              <control:DayInfoControl />
          </DataTemplate>
-        <DataTemplate DataType="{x:Type TypeName=viewModel:AddDayEventVM}">
-             <control:AddDayEventControl />
-         </DataTemplate>
         <DataTemplate DataType="{x:Type TypeName=viewModel:CalendarVM}">
             <control:CalendarControl />
         </DataTemplate>
