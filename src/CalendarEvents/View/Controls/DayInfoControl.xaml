@@ -58,7 +58,7 @@
                         Content="-"/>
                 </StackPanel>
             </DockPanel>
-            <ListBox Margin="3px" ItemsSource="{Binding CalendarVM.SelectedDay.CalendarDay.DayEvents, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+            <ListBox Margin="3px" ItemsSource="{Binding CurrentEvents}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Title}"/>
@@ -96,15 +96,15 @@
             <TextBlock
                 Margin="3px"
                 VerticalAlignment="Center"
-                Text="{Binding CalendarVM.SelectedDay.CalendarDay.Date.Day}"/>
+                Text="{Binding CurrentDay.CalendarDay.Date.Day}"/>
             <TextBlock
                 Margin="3px"
                 VerticalAlignment="Center"
-                Text="{Binding CalendarVM.SelectedDay.CalendarDay.Date.Month, Converter={StaticResource IntToMonthConverter}}"/>
+                Text="{Binding CurrentDay.CalendarDay.Date.Month, Converter={StaticResource IntToMonthConverter}}"/>
             <TextBlock
                 Margin="3px"
                 VerticalAlignment="Center"
-                Text="{Binding CalendarVM.SelectedDay.CalendarDay.Date.Year}"/>
+                Text="{Binding CurrentDay.CalendarDay.Date.Year}"/>
         </StackPanel>
     </Grid>
 </UserControl>

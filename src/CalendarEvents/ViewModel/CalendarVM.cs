@@ -29,15 +29,18 @@ public class CalendarVM : ObservableObject
     /// <summary>
     /// Создает экземпляр класса <see cref="MainVM" />.
     /// </summary>
-    public CalendarVM(INavigationService navigationService, IDialogService dialogService)
+    public CalendarVM(INavigationService navigationService, IDialogService dialogService, EventStore eventStore)
     {
         NavigationService = navigationService;
         DialogService = dialogService;
+        EventStore = eventStore;
         CurrentDate = DateOnly.FromDateTime(DateTime.Now);
         SelectNextMonth = new RelayCommand(NextMonth);
         SelectPrevMonth = new RelayCommand(PrevMonth);
         DayInfoCommand = new RelayCommand(DayInfo);
     }
+    
+    public EventStore EventStore { get; set; }
 
     public CalendarDayVM SelectedDay
     {

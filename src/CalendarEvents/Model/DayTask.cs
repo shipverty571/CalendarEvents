@@ -24,4 +24,6 @@ public class DayTask : IDayEvent
     /// Хранит значение, указывающее, выполнена задача или нет.
     /// </summary>
     public bool IsDone { get; set; }
+
+    public CalendarDay Date { get; set; }
 }

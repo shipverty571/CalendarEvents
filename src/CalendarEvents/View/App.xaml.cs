@@ -2,6 +2,7 @@
 using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Extensions.DependencyInjection;
+using Model;
 using View.Services;
 using ViewModel;
 using ViewModel.Services;
@@ -23,13 +24,13 @@ public partial class App : Application
             DataContext = _serviceProvider.GetRequiredService<MainVM>()
         });
         services.AddSingleton<MainVM>();
-        services.AddSingleton<DayInfoVM>();
-        services.AddSingleton<CalendarDayVM>();
+        services.AddTransient<DayInfoVM>();
         services.AddSingleton<AddDayEventVM>();
         services.AddSingleton<CalendarVM>();
         services.AddSingleton<EventsManagementVM>();
         services.AddSingleton<INavigationService, NavigationService>();
         services.AddSingleton<IDialogService, DialogService>();
+        services.AddSingleton<EventStore>();
         services.AddSingleton<Func<Type, ObservableObject>>(serviceProvider => viewModelType =>
             (ObservableObject)serviceProvider.GetRequiredService(viewModelType));
 

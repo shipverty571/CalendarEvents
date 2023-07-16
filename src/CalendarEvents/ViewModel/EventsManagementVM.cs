@@ -13,24 +13,23 @@ public class EventsManagementVM : ObservableObject
 
     private IDialogService _dialogService;
 
-    public EventsManagementVM(DayInfoVM dayInfoVM, IDialogService dialogService)
+    public EventsManagementVM(IDialogService dialogService, EventStore eventStore, CalendarVM calendarVM)
     {
-        DayInfoVM = dayInfoVM;
         DialogService = dialogService;
+        EventStore = eventStore;
+        CalendarVM = calendarVM;
         AddEventCommand = new RelayCommand(AddEvent);
         CloseCommand = new RelayCommand(Close);
     }
+    
+    public EventStore EventStore { get; set; }
+    
+    public CalendarVM CalendarVM { get; set; }
 
     public IDialogService DialogService
     {
         get => _dialogService;
         set => SetProperty(ref _dialogService, value);
-    }
-
-    public DayInfoVM DayInfoVM
-    {
-        get => _dayInfoVM;
-        set => SetProperty(ref _dayInfoVM, value);
     }
 
     public string Title
@@ -45,8 +44,9 @@ public class EventsManagementVM : ObservableObject
 
     private void AddEvent()
     {
-        IDayEvent dayEvent = new DayTask(Title);
-        DayInfoVM.CalendarVM.SelectedDay.CalendarDay.DayEvents.Add(dayEvent);
+        var dayEvent = new DayTask(Title);
+        dayEvent.Date = CalendarVM.SelectedDay.CalendarDay;
+        EventStore.Add(dayEvent);
         Title = "";
         DialogService.Close();
     }
