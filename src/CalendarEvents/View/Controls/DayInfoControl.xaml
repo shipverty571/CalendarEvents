@@ -44,7 +44,7 @@
                         Width="25px"
                         Height="25px"
                         Margin="3px"
-                        Command="{Binding OpenEventsManagementCommand}"
+                        Command="{Binding AddModeCommand}"
                         Content="+"/>
                     <Button
                         Width="25px"

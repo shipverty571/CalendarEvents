@@ -44,18 +44,22 @@ public class DayInfoVM : ObservableObject
     public DayInfoVM(INavigationService navigationService,
         IDialogService dialogService,
         EventRepository eventRepository,
-        CalendarVM calendarVM)
+        CalendarVM calendarVM,
+        Func<Type, ObservableObject> viewModelFactory)
     {
         NavigationService = navigationService;
         DialogService = dialogService;
         EventRepository = eventRepository;
         CurrentDay = calendarVM.SelectedDay;
+        ViewModelFactory = viewModelFactory;
         BackToCalendarCommand = new RelayCommand(BackToCalendar);
-        OpenEventsManagementCommand = new RelayCommand(OpenEventsManagement);
+        AddModeCommand = new RelayCommand(AddMode);
         EditModeCommand = new RelayCommand(EditMode);
         CurrentEvents = EventRepository.Get(CurrentDay.CalendarDay);
         EventRepository.Events.CollectionChanged += EventRepository_CollectionChanged;
     }
+    
+    public Func<Type, ObservableObject> ViewModelFactory { get; set; }
 
     /// <summary>
     /// Возвращает и задает задачи на текущий день.
@@ -84,11 +88,9 @@ public class DayInfoVM : ObservableObject
     /// <summary>
     /// Возвращает команду для вызова диалогового окна <see cref="EventsManagementVM" />.
     /// </summary>
-    public RelayCommand OpenEventsManagementCommand { get; }
+    public RelayCommand AddModeCommand { get; }
     
     public RelayCommand EditModeCommand { get; }
-
-    public bool IsEditable { get; set; } = false;
 
     /// <summary>
     /// Возвращает и задает значение, указывающее, выбрана задача или нет.
@@ -134,24 +136,38 @@ public class DayInfoVM : ObservableObject
         NavigationService.NavigateTo<CalendarVM>();
     }
 
-    /// <summary>
-    /// Открывает диалоговое окно <see cref="EventsManagementVM" />.
-    /// </summary>
-    private void OpenEventsManagement()
+    private void AddMode()
     {
+        var eventsManagementViewModel = 
+            (EventsManagementVM) ViewModelFactory.Invoke(typeof(EventsManagementVM));
+        eventsManagementViewModel.DayTask.Date = CurrentDay.CalendarDay;
+
         DialogService.Height = DialogHeight;
         DialogService.Width = DialogWidth;
-        DialogService.ShowDialog<EventsManagementVM>();
+        var result = DialogService.ShowDialog(eventsManagementViewModel);
+        if (result != true) return;
+        
+        EventRepository.Events.Add(eventsManagementViewModel.DayTask);
     }
 
     private void EditMode()
     {
-        IsEditable = true;
-        OpenEventsManagement();
+        var eventsManagementViewModel =
+            (EventsManagementVM) ViewModelFactory.Invoke(typeof(EventsManagementVM));
+        eventsManagementViewModel.DayTask = (DayTask) SelectedTask.Clone();
+        
+        DialogService.Height = DialogHeight;
+        DialogService.Width = DialogWidth;
+        var result = DialogService.ShowDialog(eventsManagementViewModel);
+        if (result != true) return;
+        
+        EventRepository.Edit(SelectedTask.Id, eventsManagementViewModel.DayTask);
     }
 
     private void EventRepository_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
         CurrentEvents = EventRepository.Get(CurrentDay.CalendarDay);
     }
+    
+    
 }

@@ -8,7 +8,7 @@ namespace ViewModel;
 /// <summary>
 /// ViewModel для EventManagementControl.
 /// </summary>
-public class EventsManagementVM : ObservableObject
+public class EventsManagementVM : ObservableObject, IDialogResultVMHelper
 {
     /// <summary>
     /// Заголовок.
@@ -18,43 +18,20 @@ public class EventsManagementVM : ObservableObject
     /// <summary>
     /// Создает экземпляр класса <see cref="EventsManagementVM" />.
     /// </summary>
-    /// <param name="dialogService">Сервис диалоговых окон.</param>
     /// <param name="eventRepository">Хранилище задач.</param>
-    /// <param name="calendarVM">ViewModel для CalendarControl.</param>
-    public EventsManagementVM(
-        IDialogService dialogService,
-        EventRepository eventRepository,
-        DayInfoVM dayInfoVM)
+    public EventsManagementVM(EventRepository eventRepository)
     {
-        DialogService = dialogService;
         EventRepository = eventRepository;
-        IsEditable = dayInfoVM.IsEditable;
         AddEventCommand = new RelayCommand(AddEvent);
         CloseCommand = new RelayCommand(Close);
-        BufferDayTask = dayInfoVM.SelectedTask;
-        DayTask = new DayTask();
-        DayTask.Date = dayInfoVM.CurrentDay.CalendarDay;
-        // if (IsEditable)
-        // {
-        //     DayTask = (DayTask) BufferDayTask.Clone();
-        // }
     }
     
-    public DayTask BufferDayTask { get; set; }
-
-    public DayTask DayTask { get; set; } 
-    
-    public bool IsEditable { get; }
+    public DayTask DayTask { get; set; }
 
     /// <summary>
     /// Возвращает и задает хранилище задач.
     /// </summary>
     public EventRepository EventRepository { get; set; }
-
-    /// <summary>
-    /// Возвращает и задает сервис диалоговых окон.
-    /// </summary>
-    public IDialogService DialogService { get; set; }
 
     /// <summary>
     /// Возвращает команду добавления задачи.
@@ -69,26 +46,23 @@ public class EventsManagementVM : ObservableObject
     /// <summary>
     /// Возвращает и задает заголовок.
     /// </summary>
-    public string Title { get; set; }
+    public string Title
+    {
+        get => DayTask.Title;
+        set => SetProperty(
+            DayTask.Title, 
+            value, 
+            DayTask, 
+            (task, title) => DayTask.Title = title);
+    }
 
     /// <summary>
     /// Добавляет задачу.
     /// </summary>
     private void AddEvent()
     {
-        // if (IsEditable)
-        // {
-        //     EventRepository.Edit(BufferDayTask, DayTask);
-        // }
-        // else
-        // {
-        //     DayTask.Date = CurrentDay.CalendarDay;
-        //     EventRepository.Add(DayTask);
-        // }
-        // Close();
-        DayTask.Title = Title;
-        EventRepository.Events.Add(DayTask);
-        Close();
+        InvokeRequestCloseDialog(
+            new RequestCloseDialogEventArgs(true));
     }
 
     /// <summary>
@@ -96,7 +70,17 @@ public class EventsManagementVM : ObservableObject
     /// </summary>
     private void Close()
     {
-        Title = "";
-        DialogService.Close();
+        // Title = "";
+        InvokeRequestCloseDialog(
+            new RequestCloseDialogEventArgs(false));
+    }
+    
+    public event EventHandler<RequestCloseDialogEventArgs> RequestCloseDialog;
+    
+    private void InvokeRequestCloseDialog(RequestCloseDialogEventArgs e)
+    {
+        var handler = RequestCloseDialog;
+        if (handler != null) 
+            handler(this, e);
     }
 }

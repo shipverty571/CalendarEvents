@@ -16,12 +16,11 @@ public interface IDialogService
     /// Возвращает и задает ширину окна.
     /// </summary>
     public int Width { get; set; }
-    
+
     /// <summary>
     /// Вызывает диалоговое окно с выбранным объектов ViewModel.
     /// </summary>
-    /// <typeparam name="T">ViewModel.</typeparam>
-    public void ShowDialog<T>() where T: ObservableObject;
+    public bool? ShowDialog(ObservableObject viewModel);
 
     /// <summary>
     /// Закрывает диалоговое окно.

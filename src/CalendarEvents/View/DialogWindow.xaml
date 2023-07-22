@@ -8,6 +8,6 @@
         Title="DialogWindow" Height="450" Width="800"
         WindowStartupLocation="CenterOwner">
     <Grid>
-        <ContentControl Content="{Binding}" />
+        <ContentControl x:Name="DialogPresenter" Content="{Binding}" />
     </Grid>
 </Window>

@@ -24,16 +24,15 @@ public class DialogService : ObservableObject, IDialogService
 
     public int Width { get; set; } = DefaultWidthWindow;
     
-    public void ShowDialog<TViewModel>() where TViewModel : ObservableObject
+    public bool? ShowDialog(ObservableObject viewModel)
     {
         _dialog = new DialogWindow();
-        var viewModel = _viewModelFactory.Invoke(typeof(TViewModel));
         _dialog.Height = Height;
         _dialog.Width = Width;
         _dialog.DataContext = viewModel;
         _dialog.Owner = Application.Current.MainWindow;
         _dialog.ShowInTaskbar = false;
-        _dialog.ShowDialog();
+        return _dialog.ShowDialog();
     }
 
     public void Close()

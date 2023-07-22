@@ -10,6 +10,8 @@ public class DayTask : ObservableObject, ICloneable
     private static int _allTasksCount;
 
     private readonly int _id;
+
+    private string _title;
     /// <summary>
     /// Создает экземпляр класса <see cref="DayTask"/>.
     /// </summary>
@@ -32,7 +34,11 @@ public class DayTask : ObservableObject, ICloneable
     /// <summary>
     /// Возвращает и задает название события.
     /// </summary>
-    public string Title { get; set; } = "";
+    public string Title
+    {
+        get => _title;
+        set => SetProperty(ref _title, value);
+    }
 
     /// <summary>
     /// Хранит значение, указывающее, выполнена задача или нет.
