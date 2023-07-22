@@ -32,33 +32,39 @@ public class DayInfoVM : ObservableObject
     /// </summary>
     private DayTask _selectedTask;
 
+    private ObservableCollection<DayTask> _currentEvents;
+
     /// <summary>
     /// Создает экземпляр класса <see cref="DayInfoVM" />.
     /// </summary>
     /// <param name="navigationService">Сервис навигации пользовательских элементов управления.</param>
     /// <param name="dialogService">Сервис диалоговых окон.</param>
-    /// <param name="eventStore">Хранилище задач.</param>
+    /// <param name="eventRepository">Хранилище задач.</param>
     /// <param name="calendarVM">ViewModel для CalendarControl.</param>
     public DayInfoVM(INavigationService navigationService,
         IDialogService dialogService,
-        EventStore eventStore,
+        EventRepository eventRepository,
         CalendarVM calendarVM)
     {
         NavigationService = navigationService;
         DialogService = dialogService;
-        EventStore = eventStore;
+        EventRepository = eventRepository;
         CurrentDay = calendarVM.SelectedDay;
-        CurrentEvents = new ObservableCollection<DayTask>();
         BackToCalendarCommand = new RelayCommand(BackToCalendar);
         OpenEventsManagementCommand = new RelayCommand(OpenEventsManagement);
-        EventStore.Events.CollectionChanged += EventStore_CollectionChanged;
-        UpdateCurrentEvents();
+        EditModeCommand = new RelayCommand(EditMode);
+        CurrentEvents = EventRepository.Get(CurrentDay.CalendarDay);
+        EventRepository.Events.CollectionChanged += EventRepository_CollectionChanged;
     }
 
     /// <summary>
     /// Возвращает и задает задачи на текущий день.
     /// </summary>
-    public ObservableCollection<DayTask> CurrentEvents { get; set; }
+    public ObservableCollection<DayTask> CurrentEvents
+    {
+        get => _currentEvents;
+        private set => SetProperty(ref _currentEvents, value);
+    }
 
     /// <summary>
     /// Возвращает и задает текущий день.
@@ -68,7 +74,7 @@ public class DayInfoVM : ObservableObject
     /// <summary>
     /// Возвращает хранилище задач.
     /// </summary>
-    public EventStore EventStore { get; }
+    public EventRepository EventRepository { get; }
 
     /// <summary>
     /// Возвращает команду для возврата на <see cref="CalendarVM" />.
@@ -79,6 +85,8 @@ public class DayInfoVM : ObservableObject
     /// Возвращает команду для вызова диалогового окна <see cref="EventsManagementVM" />.
     /// </summary>
     public RelayCommand OpenEventsManagementCommand { get; }
+    
+    public RelayCommand EditModeCommand { get; }
 
     public bool IsEditable { get; set; } = false;
 
@@ -136,19 +144,14 @@ public class DayInfoVM : ObservableObject
         DialogService.ShowDialog<EventsManagementVM>();
     }
 
-    /// <summary>
-    /// Обновляет задачи на текущий день.
-    /// </summary>
-    private void UpdateCurrentEvents()
+    private void EditMode()
     {
-        var events =
-            EventStore.Events.Where(dayEvent => dayEvent.Date.Date == CurrentDay.CalendarDay.Date);
-        CurrentEvents.Clear();
-        events.ToList().ForEach(CurrentEvents.Add);
+        IsEditable = true;
+        OpenEventsManagement();
     }
 
-    private void EventStore_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+    private void EventRepository_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
-        UpdateCurrentEvents();
+        CurrentEvents = EventRepository.Get(CurrentDay.CalendarDay);
     }
 }

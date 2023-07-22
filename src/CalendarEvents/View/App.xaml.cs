@@ -29,7 +29,7 @@ public partial class App : Application
         services.AddTransient<EventsManagementVM>();
         services.AddSingleton<INavigationService, NavigationService>();
         services.AddSingleton<IDialogService, DialogService>();
-        services.AddSingleton<EventStore>();
+        services.AddSingleton<EventRepository>();
         services.AddSingleton<Func<Type, ObservableObject>>(serviceProvider => viewModelType =>
             (ObservableObject)serviceProvider.GetRequiredService(viewModelType));
 

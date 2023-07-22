@@ -51,6 +51,7 @@
                         Height="25px"
                         Margin="3px"
                         Content="E"
+                        Command="{Binding EditModeCommand}"
                         IsEnabled="{Binding IsSelected}"/>
                     <Button
                         Width="25px"
@@ -60,7 +61,7 @@
                         IsEnabled="{Binding IsSelected}"/>
                 </StackPanel>
             </DockPanel>
-            <ListBox Margin="3px" ItemsSource="{Binding CurrentEvents}" SelectedItem="{Binding SelectedTask}">
+            <ListBox Margin="3px" ItemsSource="{Binding CurrentEvents, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedTask}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Title}"/>

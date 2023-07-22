@@ -19,29 +19,37 @@ public class EventsManagementVM : ObservableObject
     /// Создает экземпляр класса <see cref="EventsManagementVM" />.
     /// </summary>
     /// <param name="dialogService">Сервис диалоговых окон.</param>
-    /// <param name="eventStore">Хранилище задач.</param>
+    /// <param name="eventRepository">Хранилище задач.</param>
     /// <param name="calendarVM">ViewModel для CalendarControl.</param>
     public EventsManagementVM(
         IDialogService dialogService,
-        EventStore eventStore,
-        CalendarVM calendarVM)
+        EventRepository eventRepository,
+        DayInfoVM dayInfoVM)
     {
         DialogService = dialogService;
-        EventStore = eventStore;
-        CurrentDay = calendarVM.SelectedDay;
+        EventRepository = eventRepository;
+        IsEditable = dayInfoVM.IsEditable;
         AddEventCommand = new RelayCommand(AddEvent);
         CloseCommand = new RelayCommand(Close);
+        BufferDayTask = dayInfoVM.SelectedTask;
+        DayTask = new DayTask();
+        DayTask.Date = dayInfoVM.CurrentDay.CalendarDay;
+        // if (IsEditable)
+        // {
+        //     DayTask = (DayTask) BufferDayTask.Clone();
+        // }
     }
+    
+    public DayTask BufferDayTask { get; set; }
+
+    public DayTask DayTask { get; set; } 
+    
+    public bool IsEditable { get; }
 
     /// <summary>
     /// Возвращает и задает хранилище задач.
     /// </summary>
-    public EventStore EventStore { get; set; }
-
-    /// <summary>
-    /// Возвращает и задает выбранный день.
-    /// </summary>
-    public CalendarDayVM CurrentDay { get; set; }
+    public EventRepository EventRepository { get; set; }
 
     /// <summary>
     /// Возвращает и задает сервис диалоговых окон.
@@ -61,20 +69,25 @@ public class EventsManagementVM : ObservableObject
     /// <summary>
     /// Возвращает и задает заголовок.
     /// </summary>
-    public string Title
-    {
-        get => _title;
-        set => SetProperty(ref _title, value);
-    }
+    public string Title { get; set; }
 
     /// <summary>
     /// Добавляет задачу.
     /// </summary>
     private void AddEvent()
     {
-        var dayEvent = new DayTask(Title);
-        dayEvent.Date = CurrentDay.CalendarDay;
-        EventStore.Add(dayEvent);
+        // if (IsEditable)
+        // {
+        //     EventRepository.Edit(BufferDayTask, DayTask);
+        // }
+        // else
+        // {
+        //     DayTask.Date = CurrentDay.CalendarDay;
+        //     EventRepository.Add(DayTask);
+        // }
+        // Close();
+        DayTask.Title = Title;
+        EventRepository.Events.Add(DayTask);
         Close();
     }
 

@@ -1,4 +1,4 @@
-﻿namespace View.Enums;
+﻿namespace Model.Enums;
 
 public enum Month
 {

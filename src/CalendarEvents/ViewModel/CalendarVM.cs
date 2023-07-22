@@ -36,15 +36,15 @@ public class CalendarVM : ObservableObject
     /// </summary>
     /// <param name="navigationService">Сервис навигации пользовательских элементов управления.</param>
     /// <param name="dialogService">Сервис диалоговых окон.</param>
-    /// <param name="eventStore">Хранилище задач.</param>
+    /// <param name="eventRepository">Хранилище задач.</param>
     public CalendarVM(
         INavigationService navigationService,
         IDialogService dialogService,
-        EventStore eventStore)
+        EventRepository eventRepository)
     {
         NavigationService = navigationService;
         DialogService = dialogService;
-        EventStore = eventStore;
+        EventRepository = eventRepository;
         CurrentDate = DateOnly.FromDateTime(DateTime.Now);
         SelectNextMonth = new RelayCommand(NextMonth);
         SelectPrevMonth = new RelayCommand(PrevMonth);
@@ -53,7 +53,7 @@ public class CalendarVM : ObservableObject
     /// <summary>
     /// Возвращает и задает хранилище задач.
     /// </summary>
-    public EventStore EventStore { get; set; }
+    public EventRepository EventRepository { get; set; }
 
     /// <summary>
     /// Возвращает и задает выбранный день.
