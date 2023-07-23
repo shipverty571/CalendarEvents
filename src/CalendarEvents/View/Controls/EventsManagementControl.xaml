@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="View.Controls.EventsManagementControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:View.Controls"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <DockPanel>
+            <StackPanel DockPanel.Dock="Top">
+                <TextBlock Text="Title: " FontWeight="Bold" Margin="3px"/>
+                <TextBox Margin="3px" Text="{Binding Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
+                <Button Margin="3px" Content="Cancel" Height="25px" Width="75px" Command="{Binding CloseCommand}" />
+                <Button Margin="3px" Content="OK" Height="25px" Width="75px" Command="{Binding AddEventCommand}" />
+            </StackPanel>
+        </DockPanel>
+    </Grid>
+</UserControl>

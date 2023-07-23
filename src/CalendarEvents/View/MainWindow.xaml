@@ -7,8 +7,9 @@
     xmlns:local="clr-namespace:View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="MainWindow"
-    Width="800"
-    Height="450"
+    Width="1000"
+    Height="700"
+    WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <Window.Resources>
         <ResourceDictionary>
@@ -17,46 +18,6 @@
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Orientation="Horizontal">
-            <Button
-                Width="50px"
-                Height="25px"
-                Margin="3px"
-                Command="{Binding SelectNextMonth}"
-                Content="Next"/>
-            <Button
-                Width="50px"
-                Height="25px"
-                Margin="3px"
-                Command="{Binding SelectPrevMonth}"
-                Content="Prev"/>
-            <TextBlock
-                Margin="3px"
-                VerticalAlignment="Center"
-                Text="{Binding CurrentDate.Month, Converter={StaticResource IntToMonthConverter}}"/>
-            <TextBlock
-                Margin="3px"
-                VerticalAlignment="Center"
-                Text="{Binding CurrentDate.Year}"/>
-        </StackPanel>
-        <ItemsControl Grid.Row="1" ItemsSource="{Binding MonthDays}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <UniformGrid Columns="7" Rows="6"/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <TextBlock
-                        Background="Aqua"
-                        Text="{Binding CalendarDay.Date.Day}"
-                        Visibility="{Binding IsDateOfMonth, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+        <ContentControl Content="{Binding NavigationService.CurrentView}" />
     </Grid>
 </Window>
