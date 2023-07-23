@@ -22,6 +22,8 @@ public interface IDialogService
     /// </summary>
     public bool? ShowDialog(ObservableObject viewModel);
 
+    public bool ShowMessage(string caption, string text);
+
     /// <summary>
     /// Закрывает диалоговое окно.
     /// </summary>

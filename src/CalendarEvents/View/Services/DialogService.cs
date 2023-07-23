@@ -35,6 +35,17 @@ public class DialogService : ObservableObject, IDialogService
         return _dialog.ShowDialog();
     }
 
+    public bool ShowMessage(string caption, string text)
+    {
+        var messageBox = MessageBox.Show(text, caption, MessageBoxButton.OKCancel);
+        if (messageBox == MessageBoxResult.OK)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     public void Close()
     {
         _dialog.Close();
