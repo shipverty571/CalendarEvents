@@ -25,8 +25,8 @@ public class EventsManagementVM : ObservableObject, IDialogResultVMHelper
         AddEventCommand = new RelayCommand(AddEvent);
         CloseCommand = new RelayCommand(Close);
     }
-    
-    public DayTask DayTask { get; set; }
+
+    public DayTask DayTask { get; set; } = new DayTask();
 
     /// <summary>
     /// Возвращает и задает хранилище задач.
