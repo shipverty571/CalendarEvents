@@ -23,6 +23,11 @@ public class DayInfoVM : ObservableObject
     private const int DialogWidth = 400;
 
     /// <summary>
+    /// Коллекция задач.
+    /// </summary>
+    private ObservableCollection<DayTask> _currentEvents;
+
+    /// <summary>
     /// Хранит значение, указывающее, выбрана задача или нет.
     /// </summary>
     private bool _isSelected;
@@ -32,8 +37,6 @@ public class DayInfoVM : ObservableObject
     /// </summary>
     private DayTask _selectedTask;
 
-    private ObservableCollection<DayTask> _currentEvents;
-
     /// <summary>
     /// Создает экземпляр класса <see cref="DayInfoVM" />.
     /// </summary>
@@ -41,6 +44,7 @@ public class DayInfoVM : ObservableObject
     /// <param name="dialogService">Сервис диалоговых окон.</param>
     /// <param name="eventRepository">Хранилище задач.</param>
     /// <param name="calendarVM">ViewModel для CalendarControl.</param>
+    /// <param name="viewModelFactory">Фабрика получения экземпляра ViewModel из коллекции сервисов.</param>
     public DayInfoVM(INavigationService navigationService,
         IDialogService dialogService,
         EventRepository eventRepository,
@@ -52,24 +56,20 @@ public class DayInfoVM : ObservableObject
         EventRepository = eventRepository;
         CurrentDay = calendarVM.SelectedDay;
         ViewModelFactory = viewModelFactory;
+        
         BackToCalendarCommand = new RelayCommand(BackToCalendar);
         AddModeCommand = new RelayCommand(AddMode);
         EditModeCommand = new RelayCommand(EditMode);
         RemoveTaskCommand = new RelayCommand(RemoveTask);
+        
         CurrentEvents = EventRepository.Get(CurrentDay.CalendarDay);
         EventRepository.Events.CollectionChanged += EventRepository_CollectionChanged;
     }
-    
-    public Func<Type, ObservableObject> ViewModelFactory { get; set; }
 
     /// <summary>
-    /// Возвращает и задает задачи на текущий день.
+    /// Возвращает и задает фабрику для получения экземпляра ViewModel из коллекции сервисов.
     /// </summary>
-    public ObservableCollection<DayTask> CurrentEvents
-    {
-        get => _currentEvents;
-        private set => SetProperty(ref _currentEvents, value);
-    }
+    public Func<Type, ObservableObject> ViewModelFactory { get; set; }
 
     /// <summary>
     /// Возвращает и задает текущий день.
@@ -87,13 +87,29 @@ public class DayInfoVM : ObservableObject
     public RelayCommand BackToCalendarCommand { get; }
 
     /// <summary>
-    /// Возвращает команду для вызова диалогового окна <see cref="EventsManagementVM" />.
+    /// Возвращает команду для добавления задачи.
     /// </summary>
     public RelayCommand AddModeCommand { get; }
-    
+
+    /// <summary>
+    /// Возвращает команду для редактирования задачи.
+    /// </summary>
     public RelayCommand EditModeCommand { get; }
-    
+
+    /// <summary>
+    /// Возвращает команду для удаления задачи.
+    /// </summary>
     public RelayCommand RemoveTaskCommand { get; }
+    
+    /// <summary>
+    /// Возвращает и задает сервис навигации пользовательских элементов управления.
+    /// </summary>
+    public INavigationService NavigationService { get; set; }
+
+    /// <summary>
+    /// Возвращает и задает сервис диалоговых окон.
+    /// </summary>
+    public IDialogService DialogService { get; set; }
 
     /// <summary>
     /// Возвращает и задает значение, указывающее, выбрана задача или нет.
@@ -102,6 +118,15 @@ public class DayInfoVM : ObservableObject
     {
         get => _isSelected;
         set => SetProperty(ref _isSelected, value);
+    }
+    
+    /// <summary>
+    /// Возвращает и задает задачи на текущий день.
+    /// </summary>
+    public ObservableCollection<DayTask> CurrentEvents
+    {
+        get => _currentEvents;
+        private set => SetProperty(ref _currentEvents, value);
     }
 
     /// <summary>
@@ -122,16 +147,6 @@ public class DayInfoVM : ObservableObject
     }
 
     /// <summary>
-    /// Возвращает и задает сервис навигации пользовательских элементов управления.
-    /// </summary>
-    public INavigationService NavigationService { get; set; }
-
-    /// <summary>
-    /// Возвращает и задает сервис диалоговых окон.
-    /// </summary>
-    public IDialogService DialogService { get; set; }
-
-    /// <summary>
     /// Выполняет возврат на <see cref="CalendarVM" />.
     /// </summary>
     private void BackToCalendar()
@@ -139,48 +154,55 @@ public class DayInfoVM : ObservableObject
         NavigationService.NavigateTo<CalendarVM>();
     }
 
+    /// <summary>
+    /// Добавляет новую задачу.
+    /// </summary>
     private void AddMode()
     {
-        var eventsManagementViewModel = 
-            (EventsManagementVM) ViewModelFactory.Invoke(typeof(EventsManagementVM));
-        eventsManagementViewModel.DayTask.Date = CurrentDay.CalendarDay;
+        var eventsManagementViewModel =
+            (EventsManagementVM)ViewModelFactory.Invoke(typeof(EventsManagementVM));
 
         DialogService.Height = DialogHeight;
         DialogService.Width = DialogWidth;
         var result = DialogService.ShowDialog(eventsManagementViewModel);
         if (result != true) return;
-        
+
         EventRepository.Events.Add(eventsManagementViewModel.DayTask);
     }
 
+    /// <summary>
+    /// Редактирует выбранную задачу.
+    /// </summary>
     private void EditMode()
     {
         var eventsManagementViewModel =
-            (EventsManagementVM) ViewModelFactory.Invoke(typeof(EventsManagementVM));
-        eventsManagementViewModel.DayTask = (DayTask) SelectedTask.Clone();
-        
+            (EventsManagementVM)ViewModelFactory.Invoke(typeof(EventsManagementVM));
+        eventsManagementViewModel.DayTask = (DayTask)SelectedTask.Clone();
+
         DialogService.Height = DialogHeight;
         DialogService.Width = DialogWidth;
         var result = DialogService.ShowDialog(eventsManagementViewModel);
         if (result != true) return;
-        
+
         EventRepository.Edit(SelectedTask.Id, eventsManagementViewModel.DayTask);
     }
 
+    /// <summary>
+    /// Удаляет выбранную задачу.
+    /// </summary>
     private void RemoveTask()
     {
         var result = DialogService.ShowMessage(
             "Remove task",
             "Do you really want to delete the task?");
         if (!result) return;
-        
+
         EventRepository.Remove(SelectedTask.Id);
     }
 
-    private void EventRepository_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+    private void EventRepository_CollectionChanged(object? sender,
+        NotifyCollectionChangedEventArgs e)
     {
         CurrentEvents = EventRepository.Get(CurrentDay.CalendarDay);
     }
-    
-    
 }

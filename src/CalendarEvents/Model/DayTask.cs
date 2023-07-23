@@ -7,29 +7,40 @@ namespace Model;
 /// </summary>
 public class DayTask : ObservableObject, ICloneable
 {
+    /// <summary>
+    /// Хранит количество всех созданных задач.
+    /// </summary>
     private static int _allTasksCount;
 
-    private readonly int _id;
-
-    private string _title;
     /// <summary>
-    /// Создает экземпляр класса <see cref="DayTask"/>.
+    /// Заголовок.
+    /// </summary>
+    private string _title;
+
+    /// <summary>
+    /// Создает экземпляр класса <see cref="DayTask" />.
     /// </summary>
     /// <param name="title">Название.</param>
     public DayTask(string title)
     {
         Title = title;
         _allTasksCount++;
-        _id = _allTasksCount;
+        Id = _allTasksCount;
     }
 
+    /// <summary>
+    /// Создает экземпляр класса <see cref="DayTask"/>.
+    /// </summary>
     public DayTask()
     {
         _allTasksCount++;
-        _id = _allTasksCount;
+        Id = _allTasksCount;
     }
 
-    public int Id => _id;
+    /// <summary>
+    /// Возвращает уникальный идентификатор.
+    /// </summary>
+    public int Id { get; }
 
     /// <summary>
     /// Возвращает и задает название события.
@@ -41,12 +52,19 @@ public class DayTask : ObservableObject, ICloneable
     }
 
     /// <summary>
-    /// Хранит значение, указывающее, выполнена задача или нет.
+    /// Возвращает и задает значение, указывающее, выполнена задача или нет.
     /// </summary>
     public bool IsDone { get; set; } = false;
 
+    /// <summary>
+    /// Возвращает и задает день.
+    /// </summary>
     public CalendarDay Date { get; set; }
 
+    /// <summary>
+    /// Производит клонирование текущего экземпляра.
+    /// </summary>
+    /// <returns>Возвращает клон текущего экземпляра.</returns>
     public object Clone()
     {
         return new DayTask(Title);

@@ -25,20 +25,13 @@ public class NavigationService : ObservableObject, INavigationService
     {
         _viewModelFactory = viewModelFactory;
     }
-
-    /// <summary>
-    /// Возвращает и задает текущий вид.
-    /// </summary>
+    
     public ObservableObject CurrentView
     {
         get => _currentView;
         set => SetProperty(ref _currentView, value);
     }
-
-    /// <summary>
-    /// Изменяет текущий вид на другой.
-    /// </summary>
-    /// <typeparam name="TViewModel">ViewModel вида, на который необходимо заменить.</typeparam>
+    
     public void NavigateTo<TViewModel>() where TViewModel : ObservableObject
     {
         var viewModel = _viewModelFactory.Invoke(typeof(TViewModel));

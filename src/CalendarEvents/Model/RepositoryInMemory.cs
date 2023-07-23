@@ -2,19 +2,40 @@
 
 namespace Model;
 
+/// <summary>
+/// Шаблонный класс хранилища.
+/// </summary>
+/// <typeparam name="T">Класс хранилища.</typeparam>
 public class RepositoryInMemory<T>
 {
-    private ObservableCollection<T> _events;
+    /// <summary>
+    /// Коллекция.
+    /// </summary>
+    private readonly ObservableCollection<T> _collection;
 
-    public ObservableCollection<T> GetAll() => _events;
-    
+    /// <summary>
+    /// Создает экземпляр класса <see cref="RepositoryInMemory{T}"/>.
+    /// </summary>
     public RepositoryInMemory()
     {
-        _events = new ObservableCollection<T>();
+        _collection = new ObservableCollection<T>();
     }
 
-    public RepositoryInMemory(ObservableCollection<T> events)
+    /// <summary>
+    /// Создает экземпляр класса <see cref="RepositoryInMemory{T}"/>.
+    /// </summary>
+    /// <param name="collection">Коллекция.</param>
+    public RepositoryInMemory(ObservableCollection<T> collection)
     {
-        _events = events;
+        _collection = collection;
+    }
+
+    /// <summary>
+    /// Возвращает коллекцию.
+    /// </summary>
+    /// <returns>Возвращает коллекцию.</returns>
+    public ObservableCollection<T> GetAll()
+    {
+        return _collection;
     }
 }

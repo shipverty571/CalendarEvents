@@ -8,24 +8,27 @@ namespace ViewModel.Services;
 public interface IDialogService
 {
     /// <summary>
-    /// Возвращает и задает высоту окна.
+    /// Возвращает и задает высоту диалогового окна.
     /// </summary>
     public int Height { get; set; }
-    
+
     /// <summary>
-    /// Возвращает и задает ширину окна.
+    /// Возвращает и задает ширину диалогового окна.
     /// </summary>
     public int Width { get; set; }
 
     /// <summary>
-    /// Вызывает диалоговое окно с выбранным объектов ViewModel.
+    /// Вызывает диалоговое окно
     /// </summary>
+    /// <param name="viewModel">ViewModel.</param>
+    /// <returns>Возвращает результат вызова диалогового окна.</returns>
     public bool? ShowDialog(ObservableObject viewModel);
 
-    public bool ShowMessage(string caption, string text);
-
     /// <summary>
-    /// Закрывает диалоговое окно.
+    /// Вызывает диалоговое окно с сообщением.
     /// </summary>
-    public void Close();
+    /// <param name="caption">Заголовок окна.</param>
+    /// <param name="text">Текст окна.</param>
+    /// <returns>Возвращает результат вызова диалогового окна.</returns>
+    public bool ShowMessage(string caption, string text);
 }

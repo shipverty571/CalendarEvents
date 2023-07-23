@@ -1,29 +1,33 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using ViewModel.Services;
 
 namespace View.Services;
 
-public class DialogService : ObservableObject, IDialogService
+/// <summary>
+/// Диалоговый сервис.
+/// </summary>
+public class DialogService : IDialogService
 {
+    /// <summary>
+    /// Базовое значение высоты диалогового окна.
+    /// </summary>
     private const int DefaultHeightWindow = 450;
 
+    /// <summary>
+    /// Базовое значение ширины диалогового окна.
+    /// </summary>
     private const int DefaultWidthWindow = 800;
 
-    private readonly Func<Type, ObservableObject> _viewModelFactory;
-
+    /// <summary>
+    /// Окно.
+    /// </summary>
     private Window _dialog;
-    
-    public DialogService(Func<Type, ObservableObject> viewModelFactory)
-    {
-        _viewModelFactory = viewModelFactory;
-    }
 
     public int Height { get; set; } = DefaultHeightWindow;
 
     public int Width { get; set; } = DefaultWidthWindow;
-    
+
     public bool? ShowDialog(ObservableObject viewModel)
     {
         _dialog = new DialogWindow();
@@ -38,16 +42,8 @@ public class DialogService : ObservableObject, IDialogService
     public bool ShowMessage(string caption, string text)
     {
         var messageBox = MessageBox.Show(text, caption, MessageBoxButton.OKCancel);
-        if (messageBox == MessageBoxResult.OK)
-        {
-            return true;
-        }
+        if (messageBox == MessageBoxResult.OK) return true;
 
         return false;
-    }
-
-    public void Close()
-    {
-        _dialog.Close();
     }
 }

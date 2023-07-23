@@ -1,5 +1,8 @@
 ﻿namespace Model.Enums;
 
+/// <summary>
+/// Перечисление всех месяцев.
+/// </summary>
 public enum Month
 {
     January = 1,

@@ -1,14 +1,20 @@
 ﻿using System.Collections.ObjectModel;
-using System.Runtime.CompilerServices;
 
 namespace Model;
 
+/// <summary>
+/// Класс с тестовыми данными для отладки.
+/// </summary>
 public static class TestData
 {
+    /// <summary>
+    /// Генерирует коллекцию задач.
+    /// </summary>
+    /// <returns>Возвращает коллекцию задач.</returns>
     public static ObservableCollection<DayTask> DayTasks()
     {
-        ObservableCollection<DayTask> dayTasks = new ObservableCollection<DayTask>();
-        for (int i = 0; i < 10; i++)
+        var dayTasks = new ObservableCollection<DayTask>();
+        for (var i = 0; i < 10; i++)
         {
             var task = new DayTask();
             task.Title = $"Task {task.Id}";

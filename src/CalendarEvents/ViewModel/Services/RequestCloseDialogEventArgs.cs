@@ -1,13 +1,21 @@
-﻿using System;
+﻿namespace ViewModel.Services;
 
-namespace ViewModel.Services;
-
+/// <summary>
+/// Класс аргументов события закрытия окна.
+/// </summary>
 public class RequestCloseDialogEventArgs : EventArgs
 {
-    public bool DialogResult { get; set; }
-    
+    /// <summary>
+    /// Создает экземпляр класса <see cref="RequestCloseDialogEventArgs" />.
+    /// </summary>
+    /// <param name="dialogresult">Результат диалога.</param>
     public RequestCloseDialogEventArgs(bool dialogresult)
     {
-        this.DialogResult = dialogresult;
+        DialogResult = dialogresult;
     }
+
+    /// <summary>
+    /// Возвращает и задает результат диалога.
+    /// </summary>
+    public bool DialogResult { get; private set; }
 }

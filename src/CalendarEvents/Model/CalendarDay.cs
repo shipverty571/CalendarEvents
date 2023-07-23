@@ -1,6 +1,4 @@
-﻿using System.Collections.ObjectModel;
-
-namespace Model;
+﻿namespace Model;
 
 /// <summary>
 /// Хранит информацию о дне в календаре.
@@ -8,7 +6,7 @@ namespace Model;
 public class CalendarDay
 {
     /// <summary>
-    /// Создает экземпляр класса <see cref="CalendarDay"/>.
+    /// Создает экземпляр класса <see cref="CalendarDay" />.
     /// </summary>
     /// <param name="date">Дата.</param>
     public CalendarDay(DateOnly date)
@@ -16,11 +14,6 @@ public class CalendarDay
         Date = date;
     }
 
-    public CalendarDay()
-    {
-        
-    }
-    
     /// <summary>
     /// Возвращает и задает дату.
     /// </summary>
