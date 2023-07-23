@@ -22,4 +22,10 @@ public class EventRepository : RepositoryInMemory<DayTask>
         var editableObjectIndexOf = Events.IndexOf(Events.First(dayTask => dayTask.Id == id));
         Events[editableObjectIndexOf].Title = task.Title;
     }
+
+    public void Remove(int id)
+    {
+        var item = Events.First(task => task.Id == id);
+        Events.Remove(item);
+    }
 }
