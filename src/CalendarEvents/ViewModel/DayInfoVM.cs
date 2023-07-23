@@ -55,6 +55,7 @@ public class DayInfoVM : ObservableObject
         BackToCalendarCommand = new RelayCommand(BackToCalendar);
         AddModeCommand = new RelayCommand(AddMode);
         EditModeCommand = new RelayCommand(EditMode);
+        RemoveTaskCommand = new RelayCommand(RemoveTask);
         CurrentEvents = EventRepository.Get(CurrentDay.CalendarDay);
         EventRepository.Events.CollectionChanged += EventRepository_CollectionChanged;
     }
@@ -91,6 +92,8 @@ public class DayInfoVM : ObservableObject
     public RelayCommand AddModeCommand { get; }
     
     public RelayCommand EditModeCommand { get; }
+    
+    public RelayCommand RemoveTaskCommand { get; }
 
     /// <summary>
     /// Возвращает и задает значение, указывающее, выбрана задача или нет.
@@ -162,6 +165,16 @@ public class DayInfoVM : ObservableObject
         if (result != true) return;
         
         EventRepository.Edit(SelectedTask.Id, eventsManagementViewModel.DayTask);
+    }
+
+    private void RemoveTask()
+    {
+        var result = DialogService.ShowMessage(
+            "Remove task",
+            "Do you really want to delete the task?");
+        if (!result) return;
+        
+        EventRepository.Remove(SelectedTask.Id);
     }
 
     private void EventRepository_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)

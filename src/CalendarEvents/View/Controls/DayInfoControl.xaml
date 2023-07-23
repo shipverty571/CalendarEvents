@@ -58,6 +58,7 @@
                         Height="25px"
                         Margin="3px"
                         Content="-"
+                        Command="{Binding RemoveTaskCommand}"
                         IsEnabled="{Binding IsSelected}"/>
                 </StackPanel>
             </DockPanel>
