@@ -161,6 +161,7 @@ public class DayInfoVM : ObservableObject
     {
         var eventsManagementViewModel =
             (EventsManagementVM)ViewModelFactory.Invoke(typeof(EventsManagementVM));
+        eventsManagementViewModel.DayTask.Date = CurrentDay.CalendarDay;
 
         DialogService.Height = DialogHeight;
         DialogService.Width = DialogWidth;

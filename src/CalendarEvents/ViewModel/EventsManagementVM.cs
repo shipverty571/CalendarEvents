@@ -11,11 +11,6 @@ namespace ViewModel;
 public class EventsManagementVM : ObservableObject, IDialogResultVMHelper
 {
     /// <summary>
-    /// Заголовок.
-    /// </summary>
-    private string _title;
-
-    /// <summary>
     /// Создает экземпляр класса <see cref="EventsManagementVM" />.
     /// </summary>
     /// <param name="eventRepository">Хранилище задач.</param>
@@ -70,7 +65,6 @@ public class EventsManagementVM : ObservableObject, IDialogResultVMHelper
     /// </summary>
     private void Close()
     {
-        // Title = "";
         InvokeRequestCloseDialog(
             new RequestCloseDialogEventArgs(false));
     }
