@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Drawing;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Model;
 
@@ -60,6 +61,11 @@ public class DayTask : ObservableObject, ICloneable
     /// Возвращает и задает день.
     /// </summary>
     public CalendarDay Date { get; set; }
+    
+    /// <summary>
+    /// Возвращает и задает цвет задачи.
+    /// </summary>
+    public Color Color { get; set; }
 
     /// <summary>
     /// Производит клонирование текущего экземпляра.
