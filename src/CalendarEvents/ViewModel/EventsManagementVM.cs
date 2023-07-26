@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Drawing;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Model;
 using ViewModel.Services;
@@ -49,6 +50,26 @@ public class EventsManagementVM : ObservableObject, IDialogResultVMHelper
             value, 
             DayTask, 
             (task, title) => DayTask.Title = title);
+    }
+
+    public Color Color
+    {
+        get => DayTask.Color;
+        set => SetProperty(
+            DayTask.Color, 
+            value, 
+            DayTask, 
+            (task, color) => DayTask.Color = color);
+    }
+
+    public bool IsDone
+    {
+        get => DayTask.IsDone;
+        set => SetProperty(
+            DayTask.IsDone, 
+            value, 
+            DayTask, 
+            (task, isDone) => DayTask.IsDone = isDone);
     }
 
     /// <summary>
