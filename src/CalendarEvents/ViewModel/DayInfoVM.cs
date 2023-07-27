@@ -62,7 +62,7 @@ public class DayInfoVM : ObservableObject
         EditModeCommand = new RelayCommand(EditMode);
         RemoveTaskCommand = new RelayCommand(RemoveTask);
         
-        CurrentEvents = EventRepository.Get(CurrentDay.CalendarDay);
+        CurrentEvents = EventRepository.Get(CurrentDay);
         EventRepository.Events.CollectionChanged += EventRepository_CollectionChanged;
     }
 
@@ -74,7 +74,7 @@ public class DayInfoVM : ObservableObject
     /// <summary>
     /// Возвращает и задает текущий день.
     /// </summary>
-    public CalendarDayVM CurrentDay { get; set; }
+    public CalendarDay CurrentDay { get; set; }
 
     /// <summary>
     /// Возвращает хранилище задач.
@@ -161,7 +161,7 @@ public class DayInfoVM : ObservableObject
     {
         var eventsManagementViewModel =
             (EventsManagementVM)ViewModelFactory.Invoke(typeof(EventsManagementVM));
-        eventsManagementViewModel.DayTask.Date = CurrentDay.CalendarDay;
+        eventsManagementViewModel.DayTask.Date = CurrentDay;
 
         DialogService.Height = DialogHeight;
         DialogService.Width = DialogWidth;
@@ -204,6 +204,6 @@ public class DayInfoVM : ObservableObject
     private void EventRepository_CollectionChanged(object? sender,
         NotifyCollectionChangedEventArgs e)
     {
-        CurrentEvents = EventRepository.Get(CurrentDay.CalendarDay);
+        CurrentEvents = EventRepository.Get(CurrentDay);
     }
 }
