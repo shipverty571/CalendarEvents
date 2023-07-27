@@ -22,9 +22,12 @@ public class DayTask : ObservableObject, ICloneable
     /// Создает экземпляр класса <see cref="DayTask" />.
     /// </summary>
     /// <param name="title">Название.</param>
-    public DayTask(string title)
+    public DayTask(string title, CalendarDay date, bool isDone, Color color)
     {
         Title = title;
+        Date = date;
+        IsDone = isDone;
+        Color = color;
         _allTasksCount++;
         Id = _allTasksCount;
     }
@@ -61,11 +64,11 @@ public class DayTask : ObservableObject, ICloneable
     /// Возвращает и задает день.
     /// </summary>
     public CalendarDay Date { get; set; }
-    
+
     /// <summary>
     /// Возвращает и задает цвет задачи.
     /// </summary>
-    public Color Color { get; set; }
+    public Color Color { get; set; } = Color.LightGray;
 
     /// <summary>
     /// Производит клонирование текущего экземпляра.
@@ -73,6 +76,6 @@ public class DayTask : ObservableObject, ICloneable
     /// <returns>Возвращает клон текущего экземпляра.</returns>
     public object Clone()
     {
-        return new DayTask(Title);
+        return new DayTask(Title, Date, IsDone, Color);
     }
 }
