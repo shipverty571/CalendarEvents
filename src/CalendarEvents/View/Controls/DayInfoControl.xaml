@@ -12,6 +12,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <converters:IntToMonthConverter x:Key="IntToMonthConverter"/>
+            <converters:ColorToBrushConverter x:Key="ColorToBrushConverter" />
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
@@ -65,7 +66,11 @@
             <ListBox Margin="3px" ItemsSource="{Binding CurrentEvents, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedTask}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Title}"/>
+                        <DockPanel>
+                            <Rectangle Width="5px" DockPanel.Dock="Left" Fill="{Binding Color, Converter={StaticResource ColorToBrushConverter}}" />
+                            <CheckBox IsChecked="{Binding IsDone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" DockPanel.Dock="Right" />
+                            <TextBlock Text="{Binding Title}"/>
+                        </DockPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
