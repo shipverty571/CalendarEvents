@@ -20,8 +20,18 @@ public class EventsManagementVM : ObservableObject, IDialogResultVMHelper
         EventRepository = eventRepository;
         AddEventCommand = new RelayCommand(AddEvent);
         CloseCommand = new RelayCommand(Close);
+        Colors = new List<Color>()
+        {
+            Color.LightGray,
+            Color.DarkRed,
+            Color.Yellow,
+            Color.Green,
+            Color.MediumBlue
+        };
     }
-
+    
+    public List<Color> Colors { get; set; }
+    
     public DayTask DayTask { get; set; } = new DayTask();
 
     /// <summary>
