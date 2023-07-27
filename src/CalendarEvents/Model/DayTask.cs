@@ -14,13 +14,19 @@ public class DayTask : ObservableObject, ICloneable
     private static int _allTasksCount;
 
     /// <summary>
+    /// Цвет.
+    /// </summary>
+    private Color _color;
+
+    /// <summary>
+    /// Статус.
+    /// </summary>
+    private bool _isDone;
+
+    /// <summary>
     /// Заголовок.
     /// </summary>
     private string _title;
-
-    private Color _color;
-
-    private bool _isDone;
 
     /// <summary>
     /// Создает экземпляр класса <see cref="DayTask" />.
@@ -40,7 +46,7 @@ public class DayTask : ObservableObject, ICloneable
     }
 
     /// <summary>
-    /// Создает экземпляр класса <see cref="DayTask"/>.
+    /// Создает экземпляр класса <see cref="DayTask" />.
     /// </summary>
     public DayTask()
     {

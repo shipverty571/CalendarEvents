@@ -56,12 +56,12 @@ public class DayInfoVM : ObservableObject
         EventRepository = eventRepository;
         CurrentDay = calendarVM.SelectedDay;
         ViewModelFactory = viewModelFactory;
-        
+
         BackToCalendarCommand = new RelayCommand(BackToCalendar);
         AddModeCommand = new RelayCommand(AddMode);
         EditModeCommand = new RelayCommand(EditMode);
         RemoveTaskCommand = new RelayCommand(RemoveTask);
-        
+
         CurrentEvents = EventRepository.Get(CurrentDay);
         EventRepository.Events.CollectionChanged += EventRepository_CollectionChanged;
     }
@@ -100,7 +100,7 @@ public class DayInfoVM : ObservableObject
     /// Возвращает команду для удаления задачи.
     /// </summary>
     public RelayCommand RemoveTaskCommand { get; }
-    
+
     /// <summary>
     /// Возвращает и задает сервис навигации пользовательских элементов управления.
     /// </summary>
@@ -119,7 +119,7 @@ public class DayInfoVM : ObservableObject
         get => _isSelected;
         set => SetProperty(ref _isSelected, value);
     }
-    
+
     /// <summary>
     /// Возвращает и задает задачи на текущий день.
     /// </summary>

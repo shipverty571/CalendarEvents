@@ -80,15 +80,6 @@ public class CalendarVM : ObservableObject
     public INavigationService NavigationService { get; set; }
 
     /// <summary>
-    /// Возвращает и задает коллекцию дней в месяце.
-    /// </summary>
-    public ObservableCollection<CalendarDay> MonthDays
-    {
-        get => _monthDays;
-        set => SetProperty(ref _monthDays, value);
-    }
-
-    /// <summary>
     /// Возвращает команду смены месяца на следующий.
     /// </summary>
     public RelayCommand SelectNextMonth { get; }
@@ -97,6 +88,15 @@ public class CalendarVM : ObservableObject
     /// Возвращает команду смены месяца на предыдущий.
     /// </summary>
     public RelayCommand SelectPrevMonth { get; }
+
+    /// <summary>
+    /// Возвращает и задает коллекцию дней в месяце.
+    /// </summary>
+    public ObservableCollection<CalendarDay> MonthDays
+    {
+        get => _monthDays;
+        set => SetProperty(ref _monthDays, value);
+    }
 
     /// <summary>
     /// Возвращает и задает текущую дату.

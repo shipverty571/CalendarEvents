@@ -8,7 +8,7 @@ namespace Model;
 public class EventRepository : RepositoryInMemory<DayTask>
 {
     /// <summary>
-    /// Создает экземпляр класса <see cref="EventRepository"/>.
+    /// Создает экземпляр класса <see cref="EventRepository" />.
     /// </summary>
     public EventRepository() : base(TestData.DayTasks())
     {

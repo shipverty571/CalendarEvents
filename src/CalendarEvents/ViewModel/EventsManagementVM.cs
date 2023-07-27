@@ -20,7 +20,7 @@ public class EventsManagementVM : ObservableObject, IDialogResultVMHelper
         EventRepository = eventRepository;
         AddEventCommand = new RelayCommand(AddEvent);
         CloseCommand = new RelayCommand(Close);
-        Colors = new List<Color>()
+        Colors = new List<Color>
         {
             Color.LightGray,
             Color.DarkRed,
@@ -29,10 +29,16 @@ public class EventsManagementVM : ObservableObject, IDialogResultVMHelper
             Color.MediumBlue
         };
     }
-    
+
+    /// <summary>
+    /// Возвращает и задает коллекцию задач.
+    /// </summary>
     public List<Color> Colors { get; set; }
-    
-    public DayTask DayTask { get; set; } = new DayTask();
+
+    /// <summary>
+    /// Возвращает и задает задачу.
+    /// </summary>
+    public DayTask DayTask { get; set; } = new();
 
     /// <summary>
     /// Возвращает и задает хранилище задач.
@@ -56,31 +62,39 @@ public class EventsManagementVM : ObservableObject, IDialogResultVMHelper
     {
         get => DayTask.Title;
         set => SetProperty(
-            DayTask.Title, 
-            value, 
-            DayTask, 
+            DayTask.Title,
+            value,
+            DayTask,
             (task, title) => DayTask.Title = title);
     }
 
+    /// <summary>
+    /// Возвращает и задает цвет.
+    /// </summary>
     public Color Color
     {
         get => DayTask.Color;
         set => SetProperty(
-            DayTask.Color, 
-            value, 
-            DayTask, 
+            DayTask.Color,
+            value,
+            DayTask,
             (task, color) => DayTask.Color = color);
     }
 
+    /// <summary>
+    /// Возвращает и задает статус выполнения задачи.
+    /// </summary>
     public bool IsDone
     {
         get => DayTask.IsDone;
         set => SetProperty(
-            DayTask.IsDone, 
-            value, 
-            DayTask, 
+            DayTask.IsDone,
+            value,
+            DayTask,
             (task, isDone) => DayTask.IsDone = isDone);
     }
+
+    public event EventHandler<RequestCloseDialogEventArgs> RequestCloseDialog;
 
     /// <summary>
     /// Добавляет задачу.
@@ -99,13 +113,11 @@ public class EventsManagementVM : ObservableObject, IDialogResultVMHelper
         InvokeRequestCloseDialog(
             new RequestCloseDialogEventArgs(false));
     }
-    
-    public event EventHandler<RequestCloseDialogEventArgs> RequestCloseDialog;
-    
+
     private void InvokeRequestCloseDialog(RequestCloseDialogEventArgs e)
     {
         var handler = RequestCloseDialog;
-        if (handler != null) 
+        if (handler != null)
             handler(this, e);
     }
 }
