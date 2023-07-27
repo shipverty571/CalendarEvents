@@ -18,6 +18,10 @@ public class DayTask : ObservableObject, ICloneable
     /// </summary>
     private string _title;
 
+    private Color _color;
+
+    private bool _isDone;
+
     /// <summary>
     /// Создает экземпляр класса <see cref="DayTask" />.
     /// </summary>
@@ -61,7 +65,11 @@ public class DayTask : ObservableObject, ICloneable
     /// <summary>
     /// Возвращает и задает значение, указывающее, выполнена задача или нет.
     /// </summary>
-    public bool IsDone { get; set; } = false;
+    public bool IsDone
+    {
+        get => _isDone;
+        set => SetProperty(ref _isDone, value);
+    }
 
     /// <summary>
     /// Возвращает и задает день.
@@ -71,7 +79,11 @@ public class DayTask : ObservableObject, ICloneable
     /// <summary>
     /// Возвращает и задает цвет задачи.
     /// </summary>
-    public Color Color { get; set; } = Color.LightGray;
+    public Color Color
+    {
+        get => _color;
+        set => SetProperty(ref _color, value);
+    }
 
     /// <summary>
     /// Производит клонирование текущего экземпляра.
