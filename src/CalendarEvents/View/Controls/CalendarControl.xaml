@@ -102,7 +102,7 @@
                         <TextBlock
                             Grid.Row="0"
                             Margin="3px"
-                            Text="{Binding CalendarDay.Date.Day}"/>
+                            Text="{Binding Date.Day}"/>
                         <StackPanel Grid.Row="2">
                             <TextBlock Margin="3px" Text="Мероприятия: "/>
                             <TextBlock Margin="3px" Text="Задачи: "/>
