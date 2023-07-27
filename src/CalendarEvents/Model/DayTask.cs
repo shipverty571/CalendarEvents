@@ -22,6 +22,9 @@ public class DayTask : ObservableObject, ICloneable
     /// Создает экземпляр класса <see cref="DayTask" />.
     /// </summary>
     /// <param name="title">Название.</param>
+    /// <param name="date">Дата.</param>
+    /// <param name="isDone">Статус.</param>
+    /// <param name="color">Цвет.</param>
     public DayTask(string title, CalendarDay date, bool isDone, Color color)
     {
         Title = title;
