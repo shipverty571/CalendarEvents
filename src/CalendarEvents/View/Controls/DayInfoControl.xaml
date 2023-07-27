@@ -97,15 +97,15 @@
             <TextBlock
                 Margin="3px"
                 VerticalAlignment="Center"
-                Text="{Binding CurrentDay.CalendarDay.Date.Day}"/>
+                Text="{Binding CurrentDay.Date.Day}"/>
             <TextBlock
                 Margin="3px"
                 VerticalAlignment="Center"
-                Text="{Binding CurrentDay.CalendarDay.Date.Month, Converter={StaticResource IntToMonthConverter}}"/>
+                Text="{Binding CurrentDay.Date.Month, Converter={StaticResource IntToMonthConverter}}"/>
             <TextBlock
                 Margin="3px"
                 VerticalAlignment="Center"
-                Text="{Binding CurrentDay.CalendarDay.Date.Year}"/>
+                Text="{Binding CurrentDay.Date.Year}"/>
         </StackPanel>
     </Grid>
 </UserControl>
