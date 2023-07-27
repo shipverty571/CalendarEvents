@@ -8,7 +8,7 @@ namespace Model;
 public class EventRepository : RepositoryInMemory<DayTask>
 {
     /// <summary>
-    /// Создает экземпляр класса <see cref="EventRepository"/>.
+    /// Создает экземпляр класса <see cref="EventRepository" />.
     /// </summary>
     public EventRepository() : base(TestData.DayTasks())
     {
@@ -39,6 +39,8 @@ public class EventRepository : RepositoryInMemory<DayTask>
     {
         var editableObjectIndexOf = Events.IndexOf(Events.First(dayTask => dayTask.Id == id));
         Events[editableObjectIndexOf].Title = task.Title;
+        Events[editableObjectIndexOf].IsDone = task.IsDone;
+        Events[editableObjectIndexOf].Color = task.Color;
     }
 
     /// <summary>

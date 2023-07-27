@@ -15,7 +15,7 @@ public class DayInfoVM : ObservableObject
     /// <summary>
     /// Базовая высота диалогового окна для редактирования.
     /// </summary>
-    private const int DialogHeight = 200;
+    private const int DialogHeight = 300;
 
     /// <summary>
     /// Базовая ширина диалогового окна для редактирования.
@@ -56,13 +56,13 @@ public class DayInfoVM : ObservableObject
         EventRepository = eventRepository;
         CurrentDay = calendarVM.SelectedDay;
         ViewModelFactory = viewModelFactory;
-        
+
         BackToCalendarCommand = new RelayCommand(BackToCalendar);
         AddModeCommand = new RelayCommand(AddMode);
         EditModeCommand = new RelayCommand(EditMode);
         RemoveTaskCommand = new RelayCommand(RemoveTask);
-        
-        CurrentEvents = EventRepository.Get(CurrentDay.CalendarDay);
+
+        CurrentEvents = EventRepository.Get(CurrentDay);
         EventRepository.Events.CollectionChanged += EventRepository_CollectionChanged;
     }
 
@@ -74,7 +74,7 @@ public class DayInfoVM : ObservableObject
     /// <summary>
     /// Возвращает и задает текущий день.
     /// </summary>
-    public CalendarDayVM CurrentDay { get; set; }
+    public CalendarDay CurrentDay { get; set; }
 
     /// <summary>
     /// Возвращает хранилище задач.
@@ -100,7 +100,7 @@ public class DayInfoVM : ObservableObject
     /// Возвращает команду для удаления задачи.
     /// </summary>
     public RelayCommand RemoveTaskCommand { get; }
-    
+
     /// <summary>
     /// Возвращает и задает сервис навигации пользовательских элементов управления.
     /// </summary>
@@ -119,7 +119,7 @@ public class DayInfoVM : ObservableObject
         get => _isSelected;
         set => SetProperty(ref _isSelected, value);
     }
-    
+
     /// <summary>
     /// Возвращает и задает задачи на текущий день.
     /// </summary>
@@ -161,7 +161,7 @@ public class DayInfoVM : ObservableObject
     {
         var eventsManagementViewModel =
             (EventsManagementVM)ViewModelFactory.Invoke(typeof(EventsManagementVM));
-        eventsManagementViewModel.DayTask.Date = CurrentDay.CalendarDay;
+        eventsManagementViewModel.DayTask.Date = CurrentDay;
 
         DialogService.Height = DialogHeight;
         DialogService.Width = DialogWidth;
@@ -204,6 +204,6 @@ public class DayInfoVM : ObservableObject
     private void EventRepository_CollectionChanged(object? sender,
         NotifyCollectionChangedEventArgs e)
     {
-        CurrentEvents = EventRepository.Get(CurrentDay.CalendarDay);
+        CurrentEvents = EventRepository.Get(CurrentDay);
     }
 }

@@ -11,6 +11,12 @@
             <StackPanel DockPanel.Dock="Top">
                 <TextBlock Text="Title: " FontWeight="Bold" Margin="3px"/>
                 <TextBox Margin="3px" Text="{Binding Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Text="Status: " FontWeight="Bold" Margin="3px"/>
+                <CheckBox IsChecked="{Binding IsDone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBlock Text="Color: " FontWeight="Bold" Margin="3px"/>
+                <ListBox ItemsSource="{Binding Colors}" SelectedItem="{Binding Color, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    
+                </ListBox>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" DockPanel.Dock="Bottom" VerticalAlignment="Bottom">
                 <Button Margin="3px" Content="Cancel" Height="25px" Width="75px" Command="{Binding CloseCommand}" />

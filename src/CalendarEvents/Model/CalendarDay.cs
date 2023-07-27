@@ -15,7 +15,19 @@ public class CalendarDay
     }
 
     /// <summary>
+    /// Создает экземпляр класса <see cref="CalendarDay" />.
+    /// </summary>
+    public CalendarDay()
+    {
+    }
+
+    /// <summary>
     /// Возвращает и задает дату.
     /// </summary>
     public DateOnly Date { get; set; }
+
+    /// <summary>
+    /// Возвращает и задает значение, указывающее, что день действительно входит в текущий месяц.
+    /// </summary>
+    public bool IsDateOfMonth { get; set; }
 }
