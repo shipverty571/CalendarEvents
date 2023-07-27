@@ -24,12 +24,12 @@ public class CalendarVM : ObservableObject
     /// <summary>
     /// Коллекция дней в месяце.
     /// </summary>
-    private ObservableCollection<CalendarDayVM> _monthDays;
+    private ObservableCollection<CalendarDay> _monthDays;
 
     /// <summary>
     /// Выбранный день.
     /// </summary>
-    private CalendarDayVM _selectedDay;
+    private CalendarDay _selectedDay;
 
     /// <summary>
     /// Создает экземпляр класса <see cref="CalendarVM" />.
@@ -58,14 +58,14 @@ public class CalendarVM : ObservableObject
     /// <summary>
     /// Возвращает и задает выбранный день.
     /// </summary>
-    public CalendarDayVM SelectedDay
+    public CalendarDay SelectedDay
     {
         get => _selectedDay;
         set
         {
             _selectedDay = value;
             OnPropertyChanged();
-            if (value.CalendarDay.Date != null) NavigationService.NavigateTo<DayInfoVM>();
+            NavigationService.NavigateTo<DayInfoVM>();
         }
     }
 
@@ -82,7 +82,7 @@ public class CalendarVM : ObservableObject
     /// <summary>
     /// Возвращает и задает коллекцию дней в месяце.
     /// </summary>
-    public ObservableCollection<CalendarDayVM> MonthDays
+    public ObservableCollection<CalendarDay> MonthDays
     {
         get => _monthDays;
         set => SetProperty(ref _monthDays, value);
@@ -117,13 +117,13 @@ public class CalendarVM : ObservableObject
     /// </summary>
     private void SetMonthDays()
     {
-        MonthDays = new ObservableCollection<CalendarDayVM>();
+        MonthDays = new ObservableCollection<CalendarDay>();
         var startDayOfWeek =
             (int)new DateTime(CurrentDate.Year, CurrentDate.Month, 1).DayOfWeek;
         if (startDayOfWeek != MaxDaysOfWeek)
             for (var i = 1; i < startDayOfWeek; i++)
             {
-                var day = new CalendarDayVM();
+                var day = new CalendarDay();
                 day.IsDateOfMonth = false;
                 MonthDays.Add(day);
             }
@@ -133,8 +133,7 @@ public class CalendarVM : ObservableObject
             date.Month == CurrentDate.Month;
             date = date.AddDays(1))
         {
-            var day = new CalendarDayVM();
-            day.CalendarDay = new CalendarDay(DateOnly.FromDateTime(date));
+            var day = new CalendarDay(DateOnly.FromDateTime(date));
             day.IsDateOfMonth = true;
             MonthDays.Add(day);
         }
