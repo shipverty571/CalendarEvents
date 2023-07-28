@@ -9,7 +9,7 @@ public class CalendarDay
     /// Создает экземпляр класса <see cref="CalendarDay" />.
     /// </summary>
     /// <param name="date">Дата.</param>
-    public CalendarDay(DateOnly date)
+    public CalendarDay(DateTime date)
     {
         Date = date;
     }
@@ -24,7 +24,7 @@ public class CalendarDay
     /// <summary>
     /// Возвращает и задает дату.
     /// </summary>
-    public DateOnly Date { get; set; }
+    public DateTime Date { get; set; }
 
     /// <summary>
     /// Возвращает и задает значение, указывающее, что день действительно входит в текущий месяц.
