@@ -39,6 +39,7 @@ public partial class App : Application
     protected override void OnStartup(StartupEventArgs e)
     {
         var mainWindow = _serviceProvider.GetRequiredService<MainWindow>();
+        mainWindow.Closing += ((MainVM)mainWindow.DataContext).OnWindowClosing;
         mainWindow.Show();
         base.OnStartup(e);
     }
