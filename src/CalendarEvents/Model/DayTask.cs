@@ -16,7 +16,7 @@ public class DayTask : ObservableObject, ICloneable
     /// <summary>
     /// Цвет.
     /// </summary>
-    private Color _color;
+    private string _color;
 
     /// <summary>
     /// Статус.
@@ -35,7 +35,7 @@ public class DayTask : ObservableObject, ICloneable
     /// <param name="date">Дата.</param>
     /// <param name="isDone">Статус.</param>
     /// <param name="color">Цвет.</param>
-    public DayTask(string title, CalendarDay date, bool isDone, Color color)
+    public DayTask(string title, CalendarDay date, bool isDone, string color)
     {
         Title = title;
         Date = date;
@@ -85,7 +85,7 @@ public class DayTask : ObservableObject, ICloneable
     /// <summary>
     /// Возвращает и задает цвет задачи.
     /// </summary>
-    public Color Color
+    public string Color
     {
         get => _color;
         set => SetProperty(ref _color, value);
