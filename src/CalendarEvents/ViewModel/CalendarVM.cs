@@ -133,7 +133,7 @@ public class CalendarVM : ObservableObject
             date.Month == CurrentDate.Month;
             date = date.AddDays(1))
         {
-            var day = new CalendarDay(DateOnly.FromDateTime(date));
+            var day = new CalendarDay(date);
             day.IsDateOfMonth = true;
             MonthDays.Add(day);
         }

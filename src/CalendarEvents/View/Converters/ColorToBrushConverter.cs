@@ -12,7 +12,7 @@ namespace View.Converters;
 public class ColorToBrushConverter : IValueConverter
 {
     /// <summary>
-    /// Конвертирует <see cref="Color" /> значение в <see cref="object" />.
+    /// Конвертирует <see cref="string" /> значение в <see cref="object" />.
     /// </summary>
     /// <param name="value">Значение, которое необходимо преобразовать.</param>
     /// <param name="targetType">Тип, в который необходимо преобразовать.</param>
@@ -25,13 +25,14 @@ public class ColorToBrushConverter : IValueConverter
         object parameter,
         CultureInfo culture)
     {
-        var color = (System.Drawing.Color)value;
+        
+        var color = System.Drawing.ColorTranslator.FromHtml((string) value);
         var mediaColor = Color.FromArgb(color.A, color.R, color.G, color.B);
         return new SolidColorBrush(mediaColor);
     }
 
     /// <summary>
-    /// Конвертирует <see cref="object" /> значение в <see cref="Color" />.
+    /// Конвертирует <see cref="object" /> значение в <see cref="string" />.
     /// </summary>
     /// <param name="value">Значение, которое необходимо преобразовать.</param>
     /// <param name="targetType">Тип, в который необходимо преобразовать.</param>

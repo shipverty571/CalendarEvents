@@ -20,20 +20,22 @@ public class EventsManagementVM : ObservableObject, IDialogResultVMHelper
         EventRepository = eventRepository;
         AddEventCommand = new RelayCommand(AddEvent);
         CloseCommand = new RelayCommand(Close);
-        Colors = new List<Color>
+        Colors = new List<string>
         {
-            Color.LightGray,
-            Color.DarkRed,
-            Color.Yellow,
-            Color.Green,
-            Color.MediumBlue
+            "LightGray",
+            "Red",
+            "Orange",
+            "Yellow",
+            "Green",
+            "Blue",
+            "#D7D7D7"
         };
     }
 
     /// <summary>
     /// Возвращает и задает коллекцию задач.
     /// </summary>
-    public List<Color> Colors { get; set; }
+    public List<string> Colors { get; set; }
 
     /// <summary>
     /// Возвращает и задает задачу.
@@ -71,7 +73,7 @@ public class EventsManagementVM : ObservableObject, IDialogResultVMHelper
     /// <summary>
     /// Возвращает и задает цвет.
     /// </summary>
-    public Color Color
+    public string Color
     {
         get => DayTask.Color;
         set => SetProperty(

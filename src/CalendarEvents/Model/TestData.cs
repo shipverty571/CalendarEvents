@@ -18,7 +18,7 @@ public static class TestData
         {
             var task = new DayTask();
             task.Title = $"Task {task.Id}";
-            task.Date = new CalendarDay(DateOnly.FromDateTime(DateTime.Today));
+            task.Date = new CalendarDay(DateTime.Today);
             dayTasks.Add(task);
         }
 

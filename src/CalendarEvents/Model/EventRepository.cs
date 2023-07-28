@@ -7,17 +7,22 @@ namespace Model;
 /// </summary>
 public class EventRepository : RepositoryInMemory<DayTask>
 {
-    /// <summary>
-    /// Создает экземпляр класса <see cref="EventRepository" />.
-    /// </summary>
-    public EventRepository() : base(TestData.DayTasks())
-    {
-    }
+    // /// <summary>
+    // /// Создает экземпляр класса <see cref="EventRepository" />.
+    // /// </summary>
+    // public EventRepository() : base(TestData.DayTasks())
+    // {
+    // }
 
+    public EventRepository()
+    {
+        
+    }
+    
     /// <summary>
     /// Возвращает коллекцию со всеми задачами.
     /// </summary>
-    public ObservableCollection<DayTask> Events => GetAll();
+    public ObservableCollection<DayTask> Events { get; set; }
 
     /// <summary>
     /// Получение задач на определенный день.
