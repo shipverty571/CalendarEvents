@@ -30,4 +30,9 @@ public class CalendarDay
     /// Возвращает и задает значение, указывающее, что день действительно входит в текущий месяц.
     /// </summary>
     public bool IsDateOfMonth { get; set; }
+
+    /// <summary>
+    /// Возвращает и задает значение, указывающее, есть ли задачи на этот день.
+    /// </summary>
+    public bool HasTask { get; set; } = false;
 }
