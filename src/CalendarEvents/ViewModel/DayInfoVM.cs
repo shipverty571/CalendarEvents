@@ -209,5 +209,6 @@ public class DayInfoVM : ObservableObject
         NotifyCollectionChangedEventArgs e)
     {
         CurrentEvents = EventRepository.Get(CurrentDay);
+        CurrentDay.HasTask = CurrentEvents.Count > 0 ? true : false;
     }
 }
