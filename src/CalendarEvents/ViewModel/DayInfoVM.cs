@@ -37,6 +37,8 @@ public class DayInfoVM : ObservableObject
     /// </summary>
     private DayTask _selectedTask;
 
+    private CalendarVM _calendarVM;
+
     /// <summary>
     /// Создает экземпляр класса <see cref="DayInfoVM" />.
     /// </summary>
@@ -54,7 +56,8 @@ public class DayInfoVM : ObservableObject
         NavigationService = navigationService;
         DialogService = dialogService;
         EventRepository = eventRepository;
-        CurrentDay = calendarVM.SelectedDay;
+        _calendarVM = calendarVM;
+        CurrentDay = _calendarVM.SelectedDay;
         ViewModelFactory = viewModelFactory;
 
         BackToCalendarCommand = new RelayCommand(BackToCalendar);
@@ -151,6 +154,7 @@ public class DayInfoVM : ObservableObject
     /// </summary>
     private void BackToCalendar()
     {
+        _calendarVM.SelectedDay = null;
         NavigationService.NavigateTo<CalendarVM>();
     }
 

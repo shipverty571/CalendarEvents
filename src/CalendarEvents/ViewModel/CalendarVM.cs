@@ -65,7 +65,10 @@ public class CalendarVM : ObservableObject
         {
             _selectedDay = value;
             OnPropertyChanged();
-            NavigationService.NavigateTo<DayInfoVM>();
+            if (_selectedDay != null)
+            {
+                NavigationService.NavigateTo<DayInfoVM>();
+            }
         }
     }
 
