@@ -128,6 +128,7 @@ public class CalendarVM : ObservableObject
             {
                 var day = new CalendarDay();
                 day.IsDateOfMonth = false;
+                day.HasTask = false;
                 MonthDays.Add(day);
             }
 
@@ -138,6 +139,7 @@ public class CalendarVM : ObservableObject
         {
             var day = new CalendarDay(date);
             day.IsDateOfMonth = true;
+            day.HasTask = EventRepository.Get(day).Count > 0 ? true : false;
             MonthDays.Add(day);
         }
     }
