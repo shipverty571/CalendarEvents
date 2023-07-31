@@ -9,122 +9,155 @@
     x:Name="CalendarUserControl"
     d:DesignHeight="300"
     d:DesignWidth="300"
+    Background="#FAFAFA"
     mc:Ignorable="d">
     <UserControl.Resources>
         <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Resources/Styles/NavigateButton.xaml"/>
+                <ResourceDictionary Source="../Resources/Styles/TextStyle.xaml"/>
+                <ResourceDictionary Source="../Resources/Styles/FontsResource.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
             <converters:IntToMonthConverter x:Key="IntToMonthConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" Orientation="Horizontal">
-            <Button
-                Width="50px"
-                Height="25px"
-                Margin="3px"
-                Command="{Binding SelectNextMonth}"
-                Content="Next"/>
-            <Button
-                Width="50px"
-                Height="25px"
-                Margin="3px"
-                Command="{Binding SelectPrevMonth}"
-                Content="Prev"/>
-            <TextBlock
-                Margin="3px"
-                VerticalAlignment="Center"
-                Text="{Binding CurrentDate.Month, Converter={StaticResource IntToMonthConverter}}"/>
-            <TextBlock
-                Margin="3px"
-                VerticalAlignment="Center"
-                Text="{Binding CurrentDate.Year}"/>
-            
-        </StackPanel>
-        <Separator Grid.Row="1" Margin="3px"/>
-        <UniformGrid Grid.Row="2" Columns="7">
-            <TextBlock
-                Margin="1px"
-                Text="Monday"
-                TextAlignment="Center"/>
-            <TextBlock
-                Margin="1px"
-                Text="Tuesday"
-                TextAlignment="Center"/>
-            <TextBlock
-                Margin="1px"
-                Text="Wednesday"
-                TextAlignment="Center"/>
-            <TextBlock
-                Margin="1px"
-                Text="Thursday"
-                TextAlignment="Center"/>
-            <TextBlock
-                Margin="1px"
-                Text="Friday"
-                TextAlignment="Center"/>
-            <TextBlock
-                Margin="1px"
-                Text="Saturday"
-                TextAlignment="Center"/>
-            <TextBlock
-                Margin="1px"
-                Text="Sunday"
-                TextAlignment="Center"/>
-        </UniformGrid>
-        <ListBox
-            Grid.Row="3"
-            Margin="3px"
-            BorderThickness="0"
-            ItemsSource="{Binding MonthDays}"
-            SelectedItem="{Binding SelectedDay, UpdateSourceTrigger=PropertyChanged}">
-            <ListBox.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <UniformGrid Columns="7" Rows="6"/>
-                </ItemsPanelTemplate>
-            </ListBox.ItemsPanel>
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Grid
-                        Margin="0"
-                        Background="LightGray"
-                        Visibility="{Binding IsDateOfMonth, Converter={StaticResource BoolToVisibilityConverter}}">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <TextBlock
-                            Grid.Row="0"
-                            Margin="3px"
-                            Text="{Binding Date.Day}"/>
-                        <StackPanel Grid.Row="2">
-                            <TextBlock Margin="3px" Text="Мероприятия: "/>
-                            <TextBlock Margin="3px" Text="Задачи: "/>
-                        </StackPanel>
-                    </Grid>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-            <ListBox.ItemContainerStyle>
-                <Style TargetType="ListBoxItem">
-                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                    <Setter Property="VerticalContentAlignment" Value="Stretch"/>
-                    <Setter Property="Padding" Value="0"/>
-                    <Setter Property="BorderBrush" Value="Black"/>
-                    <Setter Property="BorderThickness" Value="0 1 0 0"/>
-                    <Setter Property="Margin" Value="0"/>
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding IsDateOfMonth}" Value="false">
-                            <Setter Property="IsEnabled" Value="false"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </ListBox.ItemContainerStyle>
-        </ListBox>
+        <Border
+            Panel.ZIndex="10"
+            Visibility="{Binding IsOpenDayInfo, Converter={StaticResource BoolToVisibilityConverter}}">
+            <Border.Background>
+                <SolidColorBrush Color="Gray" Opacity="0.5" />
+            </Border.Background>
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Button
+                    Style="{StaticResource RemoveButtonStyle}"
+                    Background="Transparent"
+                    HorizontalAlignment="Right" 
+                    Command="{Binding CloseDayInfoCommand}"/>
+                <ContentControl
+                    Width="400"
+                    Height="600"
+                    Content="{Binding CurrentDayInfoVM}"/>
+            </StackPanel>
+        </Border>
+        <Grid Margin="12" Background="#FAFAFA">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <Button Command="{Binding SelectPrevMonth}" Style="{StaticResource PrevMonthButtonStyle}"/>
+                <Button Command="{Binding SelectNextMonth}" Style="{StaticResource NextMonthButtonStyle}"/>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock
+                        Margin="4"
+                        Style="{StaticResource HeaderRedTextStyle}"
+                        Text="{Binding CurrentDate.Month, Converter={StaticResource IntToMonthConverter}}"/>
+                    <TextBlock
+                        Margin="4"
+                        Style="{StaticResource HeaderRedTextStyle}"
+                        Text="{Binding CurrentDate.Year}"/>
+                </StackPanel>
+            </StackPanel>
+            <Separator
+                Grid.Row="1"
+                Margin="4px"
+                Foreground="#8B8B8B"/>
+            <UniformGrid Grid.Row="2" Columns="7">
+                <TextBlock Style="{StaticResource LightBlackTextStyle}" Text="Monday"/>
+                <TextBlock Style="{StaticResource LightBlackTextStyle}" Text="Tuesday"/>
+                <TextBlock Style="{StaticResource LightBlackTextStyle}" Text="Wednesday"/>
+                <TextBlock
+                    Style="{StaticResource LightBlackTextStyle}"
+                    Text="Thursday"
+                    TextAlignment="Center"/>
+                <TextBlock
+                    Style="{StaticResource LightBlackTextStyle}"
+                    Text="Friday"
+                    TextAlignment="Center"/>
+                <TextBlock
+                    Style="{StaticResource LightBlackTextStyle}"
+                    Text="Saturday"
+                    TextAlignment="Center"/>
+                <TextBlock
+                    Style="{StaticResource LightBlackTextStyle}"
+                    Text="Sunday"
+                    TextAlignment="Center"/>
+            </UniformGrid>
+            <ListBox
+                Grid.Row="3"
+                Margin="4"
+                Background="#FAFAFA"
+                BorderThickness="0"
+                ItemsSource="{Binding MonthDays}"
+                SelectedItem="{Binding SelectedDay, UpdateSourceTrigger=PropertyChanged}">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="7" Rows="6"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="0" Visibility="{Binding IsDateOfMonth, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock
+                                Grid.Column="0"
+                                Margin="4 4 0 0"
+                                Text="{Binding Date.Day}"/>
+                            <Image
+                                Grid.Column="1"
+                                Width="15px"
+                                Height="15px"
+                                Margin="0"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Top"
+                                Source="../Resources/Pictures/right_triangle_red_96x96.png"
+                                Visibility="{Binding HasTask, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                        <Setter Property="FontSize" Value="16"/>
+                        <Setter Property="FontFamily" Value="{StaticResource RobotoLight}"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ListBoxItem">
+                                    <Border
+                                        Name="Border"
+                                        Background="#FAFAFA"
+                                        BorderBrush="#EBEBEB"
+                                        BorderThickness="0 1 0 0">
+                                        <ContentPresenter/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Foreground" Value="#E63232"/>
+                                            <Setter Property="FontFamily" Value="{StaticResource RobotoMedium}"/>
+                                            <Setter TargetName="Border" Property="BorderBrush" Value="#E63232"/>
+                                            <Setter TargetName="Border" Property="Background" Value="#EBEBEB"/>
+                                            <Setter TargetName="Border" Property="BorderThickness" Value="0 2 0 0"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsDateOfMonth}" Value="false">
+                                <Setter Property="IsEnabled" Value="false"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+            </ListBox>
+        </Grid>
     </Grid>
 </UserControl>
