@@ -31,6 +31,10 @@ public class CalendarVM : ObservableObject
     /// </summary>
     private CalendarDay _selectedDay;
 
+    private bool _isOpenDayInfo;
+
+    private DayInfoVM _currentDayInfoVM;
+
     /// <summary>
     /// Создает экземпляр класса <see cref="CalendarVM" />.
     /// </summary>
@@ -40,15 +44,20 @@ public class CalendarVM : ObservableObject
     public CalendarVM(
         INavigationService navigationService,
         IDialogService dialogService,
-        EventRepository eventRepository)
+        EventRepository eventRepository,
+        Func<Type, ObservableObject> viewModelFactory)
     {
         NavigationService = navigationService;
         DialogService = dialogService;
         EventRepository = eventRepository;
+        ViewModelFactory = viewModelFactory;
         CurrentDate = DateOnly.FromDateTime(DateTime.Now);
         SelectNextMonth = new RelayCommand(NextMonth);
         SelectPrevMonth = new RelayCommand(PrevMonth);
+        CloseDayInfoCommand = new RelayCommand(CloseDayInfo);
     }
+    
+    public Func<Type, ObservableObject> ViewModelFactory { get; set; }
 
     /// <summary>
     /// Возвращает и задает хранилище задач.
@@ -67,10 +76,14 @@ public class CalendarVM : ObservableObject
             OnPropertyChanged();
             if (_selectedDay != null)
             {
-                NavigationService.NavigateTo<DayInfoVM>();
+                IsOpenDayInfo = true;
+                CurrentDayInfoVM = (DayInfoVM)ViewModelFactory.Invoke(typeof(DayInfoVM));
+                // NavigationService.NavigateTo<DayInfoVM>();
             }
         }
     }
+    
+    public RelayCommand CloseDayInfoCommand { get; }
 
     /// <summary>
     /// Возвращает и задает сервис диалоговых окон.
@@ -91,6 +104,18 @@ public class CalendarVM : ObservableObject
     /// Возвращает команду смены месяца на предыдущий.
     /// </summary>
     public RelayCommand SelectPrevMonth { get; }
+
+    public bool IsOpenDayInfo
+    {
+        get => _isOpenDayInfo;
+        set => SetProperty(ref _isOpenDayInfo, value);
+    }
+
+    public DayInfoVM CurrentDayInfoVM
+    {
+        get => _currentDayInfoVM;
+        set => SetProperty(ref _currentDayInfoVM, value);
+    }
 
     /// <summary>
     /// Возвращает и задает коллекцию дней в месяце.
@@ -168,5 +193,12 @@ public class CalendarVM : ObservableObject
     private void PrevMonth()
     {
         ChangeMonth(-1);
+    }
+
+    private void CloseDayInfo()
+    {
+        IsOpenDayInfo = false;
+        SelectedDay = null;
+        CurrentDayInfoVM = null;
     }
 }
