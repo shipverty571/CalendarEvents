@@ -5,7 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:View"
         mc:Ignorable="d"
-        Title="DialogWindow" Height="450" Width="800"
+        Title="DialogWindow" Height="150" Width="300" ResizeMode="NoResize"
         WindowStartupLocation="CenterOwner">
     <Grid>
         <ContentControl x:Name="DialogPresenter" Content="{Binding}" />
