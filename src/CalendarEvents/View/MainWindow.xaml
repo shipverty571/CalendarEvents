@@ -11,6 +11,7 @@
     Height="700"
     MinWidth="1000"
     MinHeight="700"
+    Background="#FAFAFA"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <Window.Resources>
