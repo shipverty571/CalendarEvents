@@ -1,5 +1,45 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:System="clr-namespace:System;assembly=mscorlib"  >
-    <System:Double x:Key="DefaultMargin">3</System:Double>
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" >
+    <!--Margins-->
+    <sys:Double xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="ControlsMarginValue">4</sys:Double>
+    <sys:Double xmlns:sys="clr-namespace:System;assembly=mscorlib" x:Key="WindowMarginValue">8</sys:Double>
+    
+    <!--Colors-->
+    <Color x:Key="BaseBackgroundColor">#FAFAFA</Color>
+    <Color x:Key="PrimaryColor">#E63232</Color>
+    <Color x:Key="PrimaryDarkColor">#CD2D2D</Color>
+    <Color x:Key="SecondaryColor">#EBEBEB</Color>
+    <Color x:Key="SecondaryDarkColor">#D7D7D7</Color>
+    <Color x:Key="BlackColor">#000000</Color>
+    <Color x:Key="SeparatorColor">#8B8B8B</Color>
+    
+    <!--Thickness-->
+    <Thickness
+        x:Key="ControlsMargin"
+        Bottom="{StaticResource ControlsMarginValue}"
+        Left="{StaticResource ControlsMarginValue}"
+        Right="{StaticResource ControlsMarginValue}"
+        Top="{StaticResource ControlsMarginValue}" />
+    <Thickness
+        x:Key="WindowMargin"
+        Bottom="{StaticResource WindowMarginValue}"
+        Left="{StaticResource WindowMarginValue}"
+        Right="{StaticResource WindowMarginValue}"
+        Top="{StaticResource WindowMarginValue}" />
+    
+    <!--ColorBrushes-->
+    <SolidColorBrush x:Key="BaseBackgroundColorBrush"
+                     Color="{StaticResource BaseBackgroundColor}" />
+    <SolidColorBrush x:Key="PrimaryColorBrush"
+                     Color="{StaticResource PrimaryColor}" />
+    <SolidColorBrush x:Key="PrimaryDarkColorBrush"
+                     Color="{StaticResource PrimaryDarkColor}" />
+    <SolidColorBrush x:Key="SecondaryColorBrush"
+                     Color="{StaticResource SecondaryColor}" />
+    <SolidColorBrush x:Key="SecondaryDarkColorBrush"
+                     Color="{StaticResource SecondaryDarkColor}" />
+    <SolidColorBrush x:Key="BlackColorBrush"
+                     Color="{StaticResource BlackColor}" />
+    <SolidColorBrush x:Key="SeparatorColorBrush"
+                     Color="{StaticResource SeparatorColor}" />
 </ResourceDictionary>
