@@ -28,12 +28,13 @@ public class DialogService : IDialogService
 
     public int Width { get; set; } = DefaultWidthWindow;
 
-    public bool? ShowDialog(ObservableObject viewModel)
+    public bool? ShowDialog(ObservableObject viewModel, string title)
     {
         _dialog = new DialogWindow();
         _dialog.Height = Height;
         _dialog.Width = Width;
         _dialog.DataContext = viewModel;
+        _dialog.Title = title;
         _dialog.Owner = Application.Current.MainWindow;
         _dialog.ShowInTaskbar = false;
         return _dialog.ShowDialog();
