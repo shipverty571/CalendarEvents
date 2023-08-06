@@ -169,7 +169,7 @@ public class DayInfoVM : ObservableObject
 
         DialogService.Height = DialogHeight;
         DialogService.Width = DialogWidth;
-        var result = DialogService.ShowDialog(eventsManagementViewModel);
+        var result = DialogService.ShowDialog(eventsManagementViewModel, "Add task");
         if (result != true) return;
 
         EventRepository.Events.Add(eventsManagementViewModel.DayTask);
@@ -186,7 +186,7 @@ public class DayInfoVM : ObservableObject
 
         DialogService.Height = DialogHeight;
         DialogService.Width = DialogWidth;
-        var result = DialogService.ShowDialog(eventsManagementViewModel);
+        var result = DialogService.ShowDialog(eventsManagementViewModel, "Edit task");
         if (result != true) return;
 
         EventRepository.Edit(SelectedTask.Id, eventsManagementViewModel.DayTask);
