@@ -15,12 +15,12 @@ public class DayInfoVM : ObservableObject
     /// <summary>
     /// Базовая высота диалогового окна для редактирования.
     /// </summary>
-    private const int DialogHeight = 300;
+    private const int DialogHeight = 250;
 
     /// <summary>
     /// Базовая ширина диалогового окна для редактирования.
     /// </summary>
-    private const int DialogWidth = 400;
+    private const int DialogWidth = 350;
 
     /// <summary>
     /// Коллекция задач.
