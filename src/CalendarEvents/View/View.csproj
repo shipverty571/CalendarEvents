@@ -5,6 +5,8 @@
         <TargetFramework>net6.0-windows</TargetFramework>
         <Nullable>enable</Nullable>
         <UseWPF>true</UseWPF>
+        <ApplicationIcon>Resources\Pictures\calendar_96x96.ico</ApplicationIcon>
+        <AssemblyName>CalendarEvents</AssemblyName>
     </PropertyGroup>
 
     <ItemGroup>
@@ -53,6 +55,8 @@
       <Resource Include="Resources\Pictures\edit_gray_96x96.png" />
       <None Remove="Resources\Pictures\complete_black_96x96.png" />
       <Resource Include="Resources\Pictures\complete_black_96x96.png" />
+      <None Remove="Resources\Pictures\calendar_96x96.ico" />
+      <Resource Include="Resources\Pictures\calendar_96x96.ico" />
     </ItemGroup>
     
     <ItemGroup>
