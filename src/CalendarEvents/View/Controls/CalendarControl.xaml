@@ -9,39 +9,37 @@
     x:Name="CalendarUserControl"
     d:DesignHeight="300"
     d:DesignWidth="300"
-    Background="#FAFAFA"
     mc:Ignorable="d">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../Resources/Styles/NavigateButton.xaml"/>
+                <ResourceDictionary Source="../Resources/Styles/ImageButtonStyle.xaml"/>
                 <ResourceDictionary Source="../Resources/Styles/TextStyle.xaml"/>
-                <ResourceDictionary Source="../Resources/Styles/FontsResource.xaml"/>
+                <ResourceDictionary Source="../Resources/Styles/Fonts.xaml"/>
+                <ResourceDictionary Source="../Resources/Styles/Values.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
             <converters:IntToMonthConverter x:Key="IntToMonthConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid>
-        <Border
-            Panel.ZIndex="10"
-            Visibility="{Binding IsOpenDayInfo, Converter={StaticResource BoolToVisibilityConverter}}">
+        <Border Panel.ZIndex="10" Visibility="{Binding IsOpenDayInfo, Converter={StaticResource BoolToVisibilityConverter}}">
             <Border.Background>
-                <SolidColorBrush Color="Gray" Opacity="0.5" />
+                <SolidColorBrush Opacity="0.5" Color="Gray"/>
             </Border.Background>
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
                 <Button
-                    Style="{StaticResource RemoveButtonStyle}"
+                    HorizontalAlignment="Right"
                     Background="Transparent"
-                    HorizontalAlignment="Right" 
-                    Command="{Binding CloseDayInfoCommand}"/>
+                    Command="{Binding CloseDayInfoCommand}"
+                    Style="{StaticResource RemoveButtonStyle}" />
                 <ContentControl
                     Width="400"
                     Height="600"
                     Content="{Binding CurrentDayInfoVM}"/>
             </StackPanel>
         </Border>
-        <Grid Margin="12" Background="#FAFAFA">
+        <Grid Margin="{StaticResource WindowMargin}" Background="{StaticResource BaseBackgroundColorBrush}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -49,48 +47,59 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" Orientation="Horizontal">
-                <Button Command="{Binding SelectPrevMonth}" Style="{StaticResource PrevMonthButtonStyle}"/>
-                <Button Command="{Binding SelectNextMonth}" Style="{StaticResource NextMonthButtonStyle}"/>
+                <StackPanel Orientation="Horizontal" Margin="{StaticResource ControlsMargin}">
+                    <Button Command="{Binding SelectPrevMonth}" Style="{StaticResource PrevMonthButtonStyle}"/>
+                    <Button Command="{Binding SelectNextMonth}" Style="{StaticResource NextMonthButtonStyle}"/>
+                </StackPanel>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock
-                        Margin="4"
+                        Margin="{StaticResource ControlsMargin}"
                         Style="{StaticResource HeaderRedTextStyle}"
                         Text="{Binding CurrentDate.Month, Converter={StaticResource IntToMonthConverter}}"/>
                     <TextBlock
-                        Margin="4"
+                        Margin="{StaticResource ControlsMargin}"
                         Style="{StaticResource HeaderRedTextStyle}"
                         Text="{Binding CurrentDate.Year}"/>
                 </StackPanel>
             </StackPanel>
             <Separator
                 Grid.Row="1"
-                Margin="4px"
-                Foreground="#8B8B8B"/>
+                Margin="{StaticResource ControlsMargin}"
+                Foreground="{StaticResource SeparatorColorBrush}"/>
             <UniformGrid Grid.Row="2" Columns="7">
-                <TextBlock Style="{StaticResource LightBlackTextStyle}" Text="Monday"/>
-                <TextBlock Style="{StaticResource LightBlackTextStyle}" Text="Tuesday"/>
-                <TextBlock Style="{StaticResource LightBlackTextStyle}" Text="Wednesday"/>
                 <TextBlock
+                    Padding="6"
                     Style="{StaticResource LightBlackTextStyle}"
-                    Text="Thursday"
-                    TextAlignment="Center"/>
+                    Text="Monday"/>
                 <TextBlock
+                    Padding="6"
                     Style="{StaticResource LightBlackTextStyle}"
-                    Text="Friday"
-                    TextAlignment="Center"/>
+                    Text="Tuesday"/>
                 <TextBlock
+                    Padding="6"
                     Style="{StaticResource LightBlackTextStyle}"
-                    Text="Saturday"
-                    TextAlignment="Center"/>
+                    Text="Wednesday"/>
                 <TextBlock
+                    Padding="6"
                     Style="{StaticResource LightBlackTextStyle}"
-                    Text="Sunday"
-                    TextAlignment="Center"/>
+                    Text="Thursday"/>
+                <TextBlock
+                    Padding="6"
+                    Style="{StaticResource LightBlackTextStyle}"
+                    Text="Friday"/>
+                <TextBlock
+                    Padding="6"
+                    Style="{StaticResource LightBlackTextStyle}"
+                    Text="Saturday"/>
+                <TextBlock
+                    Padding="6"
+                    Style="{StaticResource LightBlackTextStyle}"
+                    Text="Sunday"/>
             </UniformGrid>
             <ListBox
                 Grid.Row="3"
-                Margin="4"
-                Background="#FAFAFA"
+                Margin="{StaticResource ControlsMargin}"
+                Background="{StaticResource BaseBackgroundColorBrush}"
                 BorderThickness="0"
                 ItemsSource="{Binding MonthDays}"
                 SelectedItem="{Binding SelectedDay, UpdateSourceTrigger=PropertyChanged}">
@@ -108,7 +117,7 @@
                             </Grid.ColumnDefinitions>
                             <TextBlock
                                 Grid.Column="0"
-                                Margin="4 4 0 0"
+                                Margin="{StaticResource ControlsMargin}"
                                 Text="{Binding Date.Day}"/>
                             <Image
                                 Grid.Column="1"
@@ -133,17 +142,17 @@
                                 <ControlTemplate TargetType="ListBoxItem">
                                     <Border
                                         Name="Border"
-                                        Background="#FAFAFA"
-                                        BorderBrush="#EBEBEB"
+                                        Background="{StaticResource BaseBackgroundColorBrush}"
+                                        BorderBrush="{StaticResource SecondaryColorBrush}"
                                         BorderThickness="0 1 0 0">
                                         <ContentPresenter/>
                                     </Border>
                                     <ControlTemplate.Triggers>
                                         <Trigger Property="IsMouseOver" Value="True">
-                                            <Setter Property="Foreground" Value="#E63232"/>
+                                            <Setter Property="Foreground" Value="{StaticResource PrimaryColorBrush}"/>
                                             <Setter Property="FontFamily" Value="{StaticResource RobotoMedium}"/>
-                                            <Setter TargetName="Border" Property="BorderBrush" Value="#E63232"/>
-                                            <Setter TargetName="Border" Property="Background" Value="#EBEBEB"/>
+                                            <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource PrimaryColorBrush}"/>
+                                            <Setter TargetName="Border" Property="Background" Value="{StaticResource SecondaryColorBrush}"/>
                                             <Setter TargetName="Border" Property="BorderThickness" Value="0 2 0 0"/>
                                         </Trigger>
                                     </ControlTemplate.Triggers>

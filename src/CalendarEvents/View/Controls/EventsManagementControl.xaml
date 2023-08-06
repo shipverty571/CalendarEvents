@@ -14,28 +14,35 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Resources/Styles/TextStyle.xaml"/>
+                <ResourceDictionary Source="../Resources/Styles/CustomButtonStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <converters:ColorToBrushConverter x:Key="ColorToBrushConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Grid>
+    <Grid Margin="{StaticResource WindowMargin}">
         <DockPanel>
             <StackPanel DockPanel.Dock="Top">
                 <TextBlock
-                    Margin="4px"
+                    Margin="{StaticResource ControlsMargin}"
                     Style="{StaticResource RegularBlackTextStyle}"
                     Text="Title: "/>
-                <TextBox Margin="3px" Text="{Binding Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                <TextBox Text="{Binding Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                     <TextBox.Style>
                         <Style TargetType="TextBox">
                             <Setter Property="Height" Value="25"/>
                             <Setter Property="FontFamily" Value="{StaticResource RobotoLight}"/>
                             <Setter Property="FontSize" Value="16"/>
-                            <Setter Property="Foreground" Value="Black" />
+                            <Setter Property="Foreground" Value="{StaticResource BlackColorBrush}"/>
+                            <Setter Property="Margin" Value="{StaticResource ControlsMargin}"/>
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="TextBox">
-                                        <Border BorderBrush="Black" BorderThickness="0 0 0 1" x:Name="Border" Background="#FAFAFA" SnapsToDevicePixels="True">
+                                        <Border
+                                            x:Name="Border"
+                                            Background="{StaticResource BaseBackgroundColorBrush}"
+                                            BorderBrush="{StaticResource BlackColorBrush}"
+                                            BorderThickness="0 0 0 1"
+                                            SnapsToDevicePixels="True">
                                             <ScrollViewer
                                                 x:Name="PART_ContentHost"
                                                 Focusable="False"
@@ -44,13 +51,11 @@
                                         </Border>
                                         <ControlTemplate.Triggers>
                                             <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter Property="Foreground" Value="Black" />
-                                                <Setter TargetName="Border" Property="BorderBrush" Value="#E63232"/>
+                                                <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource PrimaryColorBrush}"/>
                                             </Trigger>
                                             <Trigger Property="IsFocused" Value="True">
-                                                <Setter TargetName="Border" Property="BorderBrush" Value="#E63232"/>
-                                                <Setter Property="Foreground" Value="Black" />
-                                                <Setter TargetName="Border" Property="BorderThickness" Value="0, 0, 0, 2"/>
+                                                <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource PrimaryColorBrush}"/>
+                                                <Setter TargetName="Border" Property="BorderThickness" Value="0 0 0 2"/>
                                             </Trigger>
                                         </ControlTemplate.Triggers>
                                     </ControlTemplate>
@@ -60,11 +65,11 @@
                     </TextBox.Style>
                 </TextBox>
                 <TextBlock
-                    Margin="4px"
+                    Margin="{StaticResource ControlsMargin}"
                     Style="{StaticResource RegularBlackTextStyle}"
                     Text="Color: "/>
                 <ListBox
-                    Background="#FAFAFA"
+                    Background="{StaticResource BaseBackgroundColorBrush}"
                     BorderThickness="0"
                     ItemsSource="{Binding Colors}"
                     SelectedItem="{Binding Color, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
@@ -75,20 +80,20 @@
                     </ListBox.ItemsPanel>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <Grid Margin="1">
+                            <Grid>
                                 <Rectangle
                                     x:Name="Rectangle"
                                     Width="40"
                                     Height="40"
+                                    Margin="0"
                                     Fill="{Binding RelativeSource={RelativeSource Self}, Path=DataContext, Converter={StaticResource ColorToBrushConverter}}"
                                     RadiusX="20"
                                     RadiusY="20"
                                     SnapsToDevicePixels="True">
                                     <Rectangle.Style>
                                         <Style TargetType="Rectangle">
-                                            <Setter Property="Stroke" Value="Black"/>
+                                            <Setter Property="Stroke" Value="{StaticResource BlackColorBrush}"/>
                                             <Setter Property="StrokeThickness" Value="0.5"/>
-                                            <Setter Property="Margin" Value="0"/>
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding Path=IsSelected, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" Value="True">
                                                     <Setter Property="StrokeThickness" Value="2"/>
@@ -112,19 +117,8 @@
                             </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
-                    <!--<ListBox.Resources>
-                        <Style TargetType="ListBox">
-                            <Style.Triggers>
-                                <Trigger Property="IsSelected" Value="True">
-                                    <Setter TargetName="Recta"></Setter>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </ListBox.Resources>-->
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="ListBoxItem">
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="ListBoxItem">
@@ -142,15 +136,17 @@
                 DockPanel.Dock="Bottom"
                 Orientation="Horizontal">
                 <Button
-                    Width="75px"
-                    Height="25px"
-                    Margin="3px"
+                    Width="90px"
+                    Height="30px"
+                    Style="{StaticResource CustomButtonStyle}"
+                    Margin="{StaticResource ControlsMargin}"
                     Command="{Binding CloseCommand}"
                     Content="Cancel"/>
                 <Button
-                    Width="75px"
-                    Height="25px"
-                    Margin="3px"
+                    Style="{StaticResource CustomButtonStyle}"
+                    Width="90px"
+                    Height="30px"
+                    Margin="{StaticResource ControlsMargin}"
                     Command="{Binding AddEventCommand}"
                     Content="OK"/>
             </StackPanel>
