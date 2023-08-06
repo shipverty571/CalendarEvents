@@ -22,7 +22,7 @@ public interface IDialogService
     /// </summary>
     /// <param name="viewModel">ViewModel.</param>
     /// <returns>Возвращает результат вызова диалогового окна.</returns>
-    public bool? ShowDialog(ObservableObject viewModel);
+    public bool? ShowDialog(ObservableObject viewModel, string title);
 
     /// <summary>
     /// Вызывает диалоговое окно с сообщением.
