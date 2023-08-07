@@ -47,6 +47,9 @@ public class DayInfoVM : ObservableObject
     /// </summary>
     private DayTask _selectedTask;
 
+    /// <summary>
+    /// Текущий день.
+    /// </summary>
     private CalendarDay _currentDay;
 
     /// <summary>
@@ -158,6 +161,7 @@ public class DayInfoVM : ObservableObject
         var eventsManagementViewModel =
             (EventsManagementVM)ViewModelFactory.Invoke(typeof(EventsManagementVM));
         eventsManagementViewModel.DayTask.Date = CurrentDay;
+        eventsManagementViewModel.Title = "";
 
         DialogService.Height = EditDialogHeight;
         DialogService.Width = EditDialogWidth;
