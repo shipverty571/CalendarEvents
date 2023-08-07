@@ -22,15 +22,6 @@ public class RepositoryInMemory<T>
     }
 
     /// <summary>
-    /// Создает экземпляр класса <see cref="RepositoryInMemory{T}" />.
-    /// </summary>
-    /// <param name="collection">Коллекция.</param>
-    public RepositoryInMemory(ObservableCollection<T> collection)
-    {
-        _collection = collection;
-    }
-
-    /// <summary>
     /// Возвращает коллекцию.
     /// </summary>
     /// <returns>Возвращает коллекцию.</returns>
