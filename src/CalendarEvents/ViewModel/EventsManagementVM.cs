@@ -115,8 +115,6 @@ public class EventsManagementVM : ObservableObject, IDialogResultVMHelper
 
     private void InvokeRequestCloseDialog(RequestCloseDialogEventArgs e)
     {
-        var handler = RequestCloseDialog;
-        if (handler != null)
-            handler(this, e);
+        RequestCloseDialog.Invoke(this, e);
     }
 }
