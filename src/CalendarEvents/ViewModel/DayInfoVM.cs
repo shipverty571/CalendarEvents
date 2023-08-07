@@ -13,14 +13,24 @@ namespace ViewModel;
 public class DayInfoVM : ObservableObject
 {
     /// <summary>
+    /// Базовая высота диалогового окна для удаления.
+    /// </summary>
+    private const int RemoveDialogHeight = 170;
+
+    /// <summary>
+    /// Базовая ширина диалогового окна для удаления.
+    /// </summary>
+    private const int RemoveDialogWidth = 300;
+    
+    /// <summary>
     /// Базовая высота диалогового окна для редактирования.
     /// </summary>
-    private const int DialogHeight = 250;
+    private const int EditDialogHeight = 250;
 
     /// <summary>
     /// Базовая ширина диалогового окна для редактирования.
     /// </summary>
-    private const int DialogWidth = 350;
+    private const int EditDialogWidth = 350;
 
     /// <summary>
     /// Коллекция задач.
@@ -167,8 +177,8 @@ public class DayInfoVM : ObservableObject
             (EventsManagementVM)ViewModelFactory.Invoke(typeof(EventsManagementVM));
         eventsManagementViewModel.DayTask.Date = CurrentDay;
 
-        DialogService.Height = DialogHeight;
-        DialogService.Width = DialogWidth;
+        DialogService.Height = EditDialogHeight;
+        DialogService.Width = EditDialogWidth;
         var result = DialogService.ShowDialog(eventsManagementViewModel, "Add task");
         if (result != true) return;
 
@@ -184,8 +194,8 @@ public class DayInfoVM : ObservableObject
             (EventsManagementVM)ViewModelFactory.Invoke(typeof(EventsManagementVM));
         eventsManagementViewModel.DayTask = (DayTask)SelectedTask.Clone();
 
-        DialogService.Height = DialogHeight;
-        DialogService.Width = DialogWidth;
+        DialogService.Height = EditDialogHeight;
+        DialogService.Width = EditDialogWidth;
         var result = DialogService.ShowDialog(eventsManagementViewModel, "Edit task");
         if (result != true) return;
 
@@ -197,11 +207,14 @@ public class DayInfoVM : ObservableObject
     /// </summary>
     private void RemoveTask()
     {
-        var result = DialogService.ShowMessage(
-            "Remove task",
-            "Do you really want to delete the task?");
-        if (!result) return;
-
+        var messageViewModel = (MessageVM)ViewModelFactory.Invoke(typeof(MessageVM));
+        messageViewModel.Text = "Do you really want to delete the task?";
+        
+        DialogService.Height = RemoveDialogHeight;
+        DialogService.Width = RemoveDialogWidth;
+        var result = DialogService.ShowDialog(messageViewModel, "Remove task");
+        if (result != true) return;
+        
         EventRepository.Remove(SelectedTask.Id);
     }
 
