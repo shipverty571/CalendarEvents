@@ -21,7 +21,7 @@ public class DayInfoVM : ObservableObject
     /// Базовая ширина диалогового окна для удаления.
     /// </summary>
     private const int RemoveDialogWidth = 300;
-    
+
     /// <summary>
     /// Базовая высота диалогового окна для редактирования.
     /// </summary>
@@ -47,35 +47,27 @@ public class DayInfoVM : ObservableObject
     /// </summary>
     private DayTask _selectedTask;
 
-    private CalendarVM _calendarVM;
+    private CalendarDay _currentDay;
 
     /// <summary>
     /// Создает экземпляр класса <see cref="DayInfoVM" />.
     /// </summary>
-    /// <param name="navigationService">Сервис навигации пользовательских элементов управления.</param>
     /// <param name="dialogService">Сервис диалоговых окон.</param>
     /// <param name="eventRepository">Хранилище задач.</param>
-    /// <param name="calendarVM">ViewModel для CalendarControl.</param>
     /// <param name="viewModelFactory">Фабрика получения экземпляра ViewModel из коллекции сервисов.</param>
-    public DayInfoVM(INavigationService navigationService,
+    public DayInfoVM(
         IDialogService dialogService,
         EventRepository eventRepository,
-        CalendarVM calendarVM,
         Func<Type, ObservableObject> viewModelFactory)
     {
-        NavigationService = navigationService;
         DialogService = dialogService;
         EventRepository = eventRepository;
-        _calendarVM = calendarVM;
-        CurrentDay = _calendarVM.SelectedDay;
         ViewModelFactory = viewModelFactory;
 
-        BackToCalendarCommand = new RelayCommand(BackToCalendar);
         AddModeCommand = new RelayCommand(AddMode);
         EditModeCommand = new RelayCommand(EditMode);
         RemoveTaskCommand = new RelayCommand(RemoveTask);
 
-        CurrentEvents = EventRepository.Get(CurrentDay);
         EventRepository.Events.CollectionChanged += EventRepository_CollectionChanged;
     }
 
@@ -87,17 +79,21 @@ public class DayInfoVM : ObservableObject
     /// <summary>
     /// Возвращает и задает текущий день.
     /// </summary>
-    public CalendarDay CurrentDay { get; set; }
+    public CalendarDay CurrentDay
+    {
+        get => _currentDay;
+        set
+        {
+            _currentDay = value;
+            OnPropertyChanged();
+            CurrentEvents = EventRepository.Get(CurrentDay);
+        }
+    }
 
     /// <summary>
     /// Возвращает хранилище задач.
     /// </summary>
     public EventRepository EventRepository { get; }
-
-    /// <summary>
-    /// Возвращает команду для возврата на <see cref="CalendarVM" />.
-    /// </summary>
-    public RelayCommand BackToCalendarCommand { get; }
 
     /// <summary>
     /// Возвращает команду для добавления задачи.
@@ -113,11 +109,6 @@ public class DayInfoVM : ObservableObject
     /// Возвращает команду для удаления задачи.
     /// </summary>
     public RelayCommand RemoveTaskCommand { get; }
-
-    /// <summary>
-    /// Возвращает и задает сервис навигации пользовательских элементов управления.
-    /// </summary>
-    public INavigationService NavigationService { get; set; }
 
     /// <summary>
     /// Возвращает и задает сервис диалоговых окон.
@@ -157,15 +148,6 @@ public class DayInfoVM : ObservableObject
                 IsSelected = false;
             OnPropertyChanged();
         }
-    }
-
-    /// <summary>
-    /// Выполняет возврат на <see cref="CalendarVM" />.
-    /// </summary>
-    private void BackToCalendar()
-    {
-        _calendarVM.SelectedDay = null;
-        NavigationService.NavigateTo<CalendarVM>();
     }
 
     /// <summary>
@@ -209,12 +191,12 @@ public class DayInfoVM : ObservableObject
     {
         var messageViewModel = (MessageVM)ViewModelFactory.Invoke(typeof(MessageVM));
         messageViewModel.Text = "Do you really want to delete the task?";
-        
+
         DialogService.Height = RemoveDialogHeight;
         DialogService.Width = RemoveDialogWidth;
         var result = DialogService.ShowDialog(messageViewModel, "Remove task");
         if (result != true) return;
-        
+
         EventRepository.Remove(SelectedTask.Id);
     }
 

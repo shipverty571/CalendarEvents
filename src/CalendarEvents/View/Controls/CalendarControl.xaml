@@ -32,7 +32,7 @@
                     HorizontalAlignment="Right"
                     Background="Transparent"
                     Command="{Binding CloseDayInfoCommand}"
-                    Style="{StaticResource RemoveButtonStyle}" />
+                    Style="{StaticResource RemoveButtonStyle}"/>
                 <ContentControl
                     Width="400"
                     Height="600"
@@ -47,7 +47,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" Orientation="Horizontal">
-                <StackPanel Orientation="Horizontal" Margin="{StaticResource ControlsMargin}">
+                <StackPanel Margin="{StaticResource ControlsMargin}" Orientation="Horizontal">
                     <Button Command="{Binding SelectPrevMonth}" Style="{StaticResource PrevMonthButtonStyle}"/>
                     <Button Command="{Binding SelectNextMonth}" Style="{StaticResource NextMonthButtonStyle}"/>
                 </StackPanel>

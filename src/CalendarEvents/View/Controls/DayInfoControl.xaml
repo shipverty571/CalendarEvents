@@ -49,8 +49,8 @@
                     Style="{StaticResource RemoveButtonStyle}"/>
             </StackPanel>
             <ListBox
-                Background="Transparent"
                 Margin="{StaticResource ControlsMargin}"
+                Background="Transparent"
                 BorderThickness="0"
                 ItemsSource="{Binding CurrentEvents, UpdateSourceTrigger=PropertyChanged}"
                 SelectedItem="{Binding SelectedTask}">

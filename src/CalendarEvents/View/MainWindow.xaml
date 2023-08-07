@@ -15,12 +15,6 @@
     Icon="Resources/Pictures/calendar_96x96.ico"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-    <Window.Resources>
-        <ResourceDictionary>
-            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
-            <converters:IntToMonthConverter x:Key="IntToMonthConverter"/>
-        </ResourceDictionary>
-    </Window.Resources>
     <Grid>
         <ContentControl Content="{Binding NavigationService.CurrentView}"/>
     </Grid>

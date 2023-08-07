@@ -7,8 +7,11 @@ namespace Model;
 /// </summary>
 public class CalendarDay : ObservableObject
 {
+    /// <summary>
+    /// Хранит значение, указывающее, есть ли на день созданные задачи.
+    /// </summary>
     private bool _hasTask;
-    
+
     /// <summary>
     /// Создает экземпляр класса <see cref="CalendarDay" />.
     /// </summary>

@@ -22,6 +22,16 @@ public class CalendarVM : ObservableObject
     private DateOnly _currentDate;
 
     /// <summary>
+    /// Хранит экземпляр DayInfoVM.
+    /// </summary>
+    private DayInfoVM _currentDayInfoVM;
+
+    /// <summary>
+    /// Хранит значение, открывающее модальное окно для редактирования.
+    /// </summary>
+    private bool _isOpenDayInfo;
+
+    /// <summary>
     /// Коллекция дней в месяце.
     /// </summary>
     private ObservableCollection<CalendarDay> _monthDays;
@@ -31,16 +41,13 @@ public class CalendarVM : ObservableObject
     /// </summary>
     private CalendarDay _selectedDay;
 
-    private bool _isOpenDayInfo;
-
-    private DayInfoVM _currentDayInfoVM;
-
     /// <summary>
     /// Создает экземпляр класса <see cref="CalendarVM" />.
     /// </summary>
     /// <param name="navigationService">Сервис навигации пользовательских элементов управления.</param>
     /// <param name="dialogService">Сервис диалоговых окон.</param>
     /// <param name="eventRepository">Хранилище задач.</param>
+    /// <param name="viewModelFactory">Фабрика ViewModel.</param>
     public CalendarVM(
         INavigationService navigationService,
         IDialogService dialogService,
@@ -56,7 +63,10 @@ public class CalendarVM : ObservableObject
         SelectPrevMonth = new RelayCommand(PrevMonth);
         CloseDayInfoCommand = new RelayCommand(CloseDayInfo);
     }
-    
+
+    /// <summary>
+    /// Возвращает и задает экземпляр ViewModel.
+    /// </summary>
     public Func<Type, ObservableObject> ViewModelFactory { get; set; }
 
     /// <summary>
@@ -77,13 +87,13 @@ public class CalendarVM : ObservableObject
             if (_selectedDay != null)
             {
                 IsOpenDayInfo = true;
-                CurrentDayInfoVM = (DayInfoVM)ViewModelFactory.Invoke(typeof(DayInfoVM));
-                // NavigationService.NavigateTo<DayInfoVM>();
+                var dayInfoVM = (DayInfoVM)ViewModelFactory.Invoke(typeof(DayInfoVM));
+                dayInfoVM.CurrentDay = SelectedDay;
+                CurrentDayInfoVM = dayInfoVM;
             }
         }
     }
-    
-    public RelayCommand CloseDayInfoCommand { get; }
+
 
     /// <summary>
     /// Возвращает и задает сервис диалоговых окон.
@@ -104,13 +114,24 @@ public class CalendarVM : ObservableObject
     /// Возвращает команду смены месяца на предыдущий.
     /// </summary>
     public RelayCommand SelectPrevMonth { get; }
+    
+    /// <summary>
+    /// Возвращает команду закрытия диалогового окна.
+    /// </summary>
+    public RelayCommand CloseDayInfoCommand { get; }
 
+    /// <summary>
+    /// Возвращает и задает значение, открывающее модальное окно для редактирования.
+    /// </summary>
     public bool IsOpenDayInfo
     {
         get => _isOpenDayInfo;
         set => SetProperty(ref _isOpenDayInfo, value);
     }
 
+    /// <summary>
+    /// Возвращает и задает экземпляр DayInfoVM.
+    /// </summary>
     public DayInfoVM CurrentDayInfoVM
     {
         get => _currentDayInfoVM;
@@ -195,6 +216,9 @@ public class CalendarVM : ObservableObject
         ChangeMonth(-1);
     }
 
+    /// <summary>
+    /// Закрывает модальное окно.
+    /// </summary>
     private void CloseDayInfo()
     {
         IsOpenDayInfo = false;

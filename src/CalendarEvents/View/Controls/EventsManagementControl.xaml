@@ -136,15 +136,15 @@
                 DockPanel.Dock="Bottom"
                 Orientation="Horizontal">
                 <Button
-                    Style="{StaticResource CustomButtonStyle}"
                     Margin="{StaticResource ControlsMargin}"
                     Command="{Binding CloseCommand}"
-                    Content="Cancel"/>
+                    Content="Cancel"
+                    Style="{StaticResource CustomButtonStyle}"/>
                 <Button
-                    Style="{StaticResource CustomButtonStyle}"
                     Margin="{StaticResource ControlsMargin}"
                     Command="{Binding AddEventCommand}"
-                    Content="OK"/>
+                    Content="OK"
+                    Style="{StaticResource CustomButtonStyle}"/>
             </StackPanel>
         </DockPanel>
     </Grid>
