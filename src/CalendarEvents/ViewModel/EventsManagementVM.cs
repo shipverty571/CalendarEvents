@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Model;
@@ -10,8 +11,18 @@ namespace ViewModel;
 /// <summary>
 /// ViewModel для EventManagementControl.
 /// </summary>
-public class EventsManagementVM : ObservableObject, IDialogResultVMHelper
+public class EventsManagementVM : ObservableValidator, IDialogResultVMHelper
 {
+    /// <summary>
+    /// Минимальное количество символов в заголовке.
+    /// </summary>
+    private const int MinLengthText = 1;
+
+    /// <summary>
+    /// Максимальное количество символов в заголовке.
+    /// </summary>
+    private const int MaxLengthText = 100;
+    
     /// <summary>
     /// Создает экземпляр класса <see cref="EventsManagementVM" />.
     /// </summary>
@@ -19,13 +30,14 @@ public class EventsManagementVM : ObservableObject, IDialogResultVMHelper
     public EventsManagementVM(EventRepository eventRepository)
     {
         EventRepository = eventRepository;
-        AddEventCommand = new RelayCommand(AddEvent);
-        CloseCommand = new RelayCommand(Close);
+
         var colorDesctiptions = typeof(Colors).GetMembers()
             .SelectMany(member => member.GetCustomAttributes(typeof (DescriptionAttribute), true).Cast<DescriptionAttribute>())
             .ToList();
-
         Colors = colorDesctiptions.Select(color => color.Description).ToList();
+        
+        AddEventCommand = new RelayCommand(AddEvent);
+        CloseCommand = new RelayCommand(Close);
     }
 
     /// <summary>
@@ -56,6 +68,8 @@ public class EventsManagementVM : ObservableObject, IDialogResultVMHelper
     /// <summary>
     /// Возвращает и задает заголовок.
     /// </summary>
+    [MinLength(MinLengthText, ErrorMessage = $"The number of characters must be at least 1")]
+    [MaxLength(MaxLengthText, ErrorMessage = $"The number of characters should not exceed 100")]
     public string Title
     {
         get => DayTask.Title;
@@ -63,7 +77,8 @@ public class EventsManagementVM : ObservableObject, IDialogResultVMHelper
             DayTask.Title,
             value,
             DayTask,
-            (task, title) => DayTask.Title = title);
+            (task, title) => DayTask.Title = title,
+            true);
     }
 
     /// <summary>

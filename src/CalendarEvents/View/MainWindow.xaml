@@ -16,6 +16,6 @@
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <Grid>
-        <ContentControl Content="{Binding NavigationService.CurrentView}"/>
+        <ContentControl Content="{Binding CalendarVM}"/>
     </Grid>
 </Window>

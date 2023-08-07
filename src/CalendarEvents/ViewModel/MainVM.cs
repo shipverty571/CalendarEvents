@@ -25,19 +25,14 @@ public class MainVM : ObservableObject
     /// <summary>
     /// Создает экземпляр класса <see cref="MainVM" />.
     /// </summary>
-    /// <param name="navigationService">Сервис навигации пользовательских элементов управления.</param>
-    public MainVM(INavigationService navigationService, EventRepository repository)
+    public MainVM(Func<Type, ObservableObject> viewModelFactory, EventRepository repository)
     {
         _repository = repository;
         repository.Events = Serializer.Deserialize(_path);
-        NavigationService = navigationService;
-        NavigationService.NavigateTo<CalendarVM>();
+        CalendarVM = (CalendarVM)viewModelFactory.Invoke(typeof(CalendarVM));
     }
 
-    /// <summary>
-    /// Возвращает и задает сервис навигации пользовательских элементов управления.
-    /// </summary>
-    public INavigationService NavigationService { get; set; }
+    public CalendarVM CalendarVM { get; set; }
 
     public void OnWindowClosing(object sender, CancelEventArgs e)
     {

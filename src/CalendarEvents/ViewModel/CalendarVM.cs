@@ -44,17 +44,14 @@ public class CalendarVM : ObservableObject
     /// <summary>
     /// Создает экземпляр класса <see cref="CalendarVM" />.
     /// </summary>
-    /// <param name="navigationService">Сервис навигации пользовательских элементов управления.</param>
     /// <param name="dialogService">Сервис диалоговых окон.</param>
     /// <param name="eventRepository">Хранилище задач.</param>
     /// <param name="viewModelFactory">Фабрика ViewModel.</param>
     public CalendarVM(
-        INavigationService navigationService,
         IDialogService dialogService,
         EventRepository eventRepository,
         Func<Type, ObservableObject> viewModelFactory)
     {
-        NavigationService = navigationService;
         DialogService = dialogService;
         EventRepository = eventRepository;
         ViewModelFactory = viewModelFactory;
@@ -94,16 +91,10 @@ public class CalendarVM : ObservableObject
         }
     }
 
-
     /// <summary>
     /// Возвращает и задает сервис диалоговых окон.
     /// </summary>
     public IDialogService DialogService { get; set; }
-
-    /// <summary>
-    /// Возвращает и задает сервис навигации пользовательских элементов управления.
-    /// </summary>
-    public INavigationService NavigationService { get; set; }
 
     /// <summary>
     /// Возвращает команду смены месяца на следующий.
@@ -114,7 +105,7 @@ public class CalendarVM : ObservableObject
     /// Возвращает команду смены месяца на предыдущий.
     /// </summary>
     public RelayCommand SelectPrevMonth { get; }
-    
+
     /// <summary>
     /// Возвращает команду закрытия диалогового окна.
     /// </summary>

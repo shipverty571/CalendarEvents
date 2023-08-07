@@ -11,6 +11,7 @@
     <Color x:Key="SecondaryDarkColor">#D7D7D7</Color>
     <Color x:Key="BlackColor">#000000</Color>
     <Color x:Key="SeparatorColor">#8B8B8B</Color>
+    <Color x:Key="ErrorColor">#FFB6C1</Color>
 
     <!--  Thickness  -->
     <Thickness
@@ -34,4 +35,5 @@
     <SolidColorBrush x:Key="SecondaryDarkColorBrush" Color="{StaticResource SecondaryDarkColor}"/>
     <SolidColorBrush x:Key="BlackColorBrush" Color="{StaticResource BlackColor}"/>
     <SolidColorBrush x:Key="SeparatorColorBrush" Color="{StaticResource SeparatorColor}"/>
+    <SolidColorBrush x:Key="ErrorColorBrush" Color="{StaticResource ErrorColor}"/>
 </ResourceDictionary>
