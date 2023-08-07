@@ -1,7 +1,8 @@
-﻿using System.Drawing;
+﻿using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Model;
+using Model.Enums;
 using ViewModel.Services;
 
 namespace ViewModel;
@@ -20,16 +21,11 @@ public class EventsManagementVM : ObservableObject, IDialogResultVMHelper
         EventRepository = eventRepository;
         AddEventCommand = new RelayCommand(AddEvent);
         CloseCommand = new RelayCommand(Close);
-        Colors = new List<string>
-        {
-            "LightGray",
-            "Red",
-            "Orange",
-            "Yellow",
-            "Green",
-            "Blue",
-            "#D7D7D7"
-        };
+        var colorDesctiptions = typeof(Colors).GetMembers()
+            .SelectMany(member => member.GetCustomAttributes(typeof (DescriptionAttribute), true).Cast<DescriptionAttribute>())
+            .ToList();
+
+        Colors = colorDesctiptions.Select(color => color.Description).ToList();
     }
 
     /// <summary>
@@ -118,8 +114,6 @@ public class EventsManagementVM : ObservableObject, IDialogResultVMHelper
 
     private void InvokeRequestCloseDialog(RequestCloseDialogEventArgs e)
     {
-        var handler = RequestCloseDialog;
-        if (handler != null)
-            handler(this, e);
+        RequestCloseDialog.Invoke(this, e);
     }
 }

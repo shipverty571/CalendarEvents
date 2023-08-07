@@ -22,6 +22,16 @@ public class CalendarVM : ObservableObject
     private DateOnly _currentDate;
 
     /// <summary>
+    /// Хранит экземпляр DayInfoVM.
+    /// </summary>
+    private DayInfoVM _currentDayInfoVM;
+
+    /// <summary>
+    /// Хранит значение, открывающее модальное окно для редактирования.
+    /// </summary>
+    private bool _isOpenDayInfo;
+
+    /// <summary>
     /// Коллекция дней в месяце.
     /// </summary>
     private ObservableCollection<CalendarDay> _monthDays;
@@ -37,18 +47,27 @@ public class CalendarVM : ObservableObject
     /// <param name="navigationService">Сервис навигации пользовательских элементов управления.</param>
     /// <param name="dialogService">Сервис диалоговых окон.</param>
     /// <param name="eventRepository">Хранилище задач.</param>
+    /// <param name="viewModelFactory">Фабрика ViewModel.</param>
     public CalendarVM(
         INavigationService navigationService,
         IDialogService dialogService,
-        EventRepository eventRepository)
+        EventRepository eventRepository,
+        Func<Type, ObservableObject> viewModelFactory)
     {
         NavigationService = navigationService;
         DialogService = dialogService;
         EventRepository = eventRepository;
+        ViewModelFactory = viewModelFactory;
         CurrentDate = DateOnly.FromDateTime(DateTime.Now);
         SelectNextMonth = new RelayCommand(NextMonth);
         SelectPrevMonth = new RelayCommand(PrevMonth);
+        CloseDayInfoCommand = new RelayCommand(CloseDayInfo);
     }
+
+    /// <summary>
+    /// Возвращает и задает экземпляр ViewModel.
+    /// </summary>
+    public Func<Type, ObservableObject> ViewModelFactory { get; set; }
 
     /// <summary>
     /// Возвращает и задает хранилище задач.
@@ -65,9 +84,16 @@ public class CalendarVM : ObservableObject
         {
             _selectedDay = value;
             OnPropertyChanged();
-            NavigationService.NavigateTo<DayInfoVM>();
+            if (_selectedDay != null)
+            {
+                IsOpenDayInfo = true;
+                var dayInfoVM = (DayInfoVM)ViewModelFactory.Invoke(typeof(DayInfoVM));
+                dayInfoVM.CurrentDay = SelectedDay;
+                CurrentDayInfoVM = dayInfoVM;
+            }
         }
     }
+
 
     /// <summary>
     /// Возвращает и задает сервис диалоговых окон.
@@ -88,6 +114,29 @@ public class CalendarVM : ObservableObject
     /// Возвращает команду смены месяца на предыдущий.
     /// </summary>
     public RelayCommand SelectPrevMonth { get; }
+    
+    /// <summary>
+    /// Возвращает команду закрытия диалогового окна.
+    /// </summary>
+    public RelayCommand CloseDayInfoCommand { get; }
+
+    /// <summary>
+    /// Возвращает и задает значение, открывающее модальное окно для редактирования.
+    /// </summary>
+    public bool IsOpenDayInfo
+    {
+        get => _isOpenDayInfo;
+        set => SetProperty(ref _isOpenDayInfo, value);
+    }
+
+    /// <summary>
+    /// Возвращает и задает экземпляр DayInfoVM.
+    /// </summary>
+    public DayInfoVM CurrentDayInfoVM
+    {
+        get => _currentDayInfoVM;
+        set => SetProperty(ref _currentDayInfoVM, value);
+    }
 
     /// <summary>
     /// Возвращает и задает коллекцию дней в месяце.
@@ -125,6 +174,7 @@ public class CalendarVM : ObservableObject
             {
                 var day = new CalendarDay();
                 day.IsDateOfMonth = false;
+                day.HasTask = false;
                 MonthDays.Add(day);
             }
 
@@ -135,6 +185,7 @@ public class CalendarVM : ObservableObject
         {
             var day = new CalendarDay(date);
             day.IsDateOfMonth = true;
+            day.HasTask = EventRepository.Get(day).Count > 0 ? true : false;
             MonthDays.Add(day);
         }
     }
@@ -163,5 +214,15 @@ public class CalendarVM : ObservableObject
     private void PrevMonth()
     {
         ChangeMonth(-1);
+    }
+
+    /// <summary>
+    /// Закрывает модальное окно.
+    /// </summary>
+    private void CloseDayInfo()
+    {
+        IsOpenDayInfo = false;
+        SelectedDay = null;
+        CurrentDayInfoVM = null;
     }
 }

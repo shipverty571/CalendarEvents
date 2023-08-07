@@ -27,6 +27,7 @@ public partial class App : Application
         services.AddTransient<DayInfoVM>();
         services.AddSingleton<CalendarVM>();
         services.AddTransient<EventsManagementVM>();
+        services.AddTransient<MessageVM>();
         services.AddSingleton<INavigationService, NavigationService>();
         services.AddSingleton<IDialogService, DialogService>();
         services.AddSingleton<EventRepository>();

@@ -19,7 +19,7 @@ public static class Serializer
         Directory.CreateDirectory(Path.GetDirectoryName(path));
         using (var writer = new StreamWriter(path))
         {
-            var jsonSettings = new JsonSerializerSettings{Formatting = Formatting.Indented};
+            var jsonSettings = new JsonSerializerSettings { Formatting = Formatting.Indented };
             writer.Write(JsonConvert.SerializeObject(events, jsonSettings));
         }
     }

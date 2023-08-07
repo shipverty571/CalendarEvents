@@ -1,5 +1,6 @@
-﻿using System.Drawing;
+﻿using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Model.Enums;
 
 namespace Model;
 
@@ -52,6 +53,10 @@ public class DayTask : ObservableObject, ICloneable
     {
         _allTasksCount++;
         Id = _allTasksCount;
+        var color = Colors.Base;
+        Color = (color.GetType().GetMember(color.ToString())[0]
+                .GetCustomAttributes(typeof(DescriptionAttribute), false)[0] as
+            DescriptionAttribute).Description;
     }
 
     /// <summary>

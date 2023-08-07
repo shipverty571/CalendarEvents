@@ -14,7 +14,7 @@ public class RepositoryInMemory<T>
     private readonly ObservableCollection<T> _collection;
 
     /// <summary>
-    /// Создает экземпляр класса <see cref="RepositoryInMemory{T}"/>.
+    /// Создает экземпляр класса <see cref="RepositoryInMemory{T}" />.
     /// </summary>
     public RepositoryInMemory()
     {
@@ -22,7 +22,7 @@ public class RepositoryInMemory<T>
     }
 
     /// <summary>
-    /// Создает экземпляр класса <see cref="RepositoryInMemory{T}"/>.
+    /// Создает экземпляр класса <see cref="RepositoryInMemory{T}" />.
     /// </summary>
     /// <param name="collection">Коллекция.</param>
     public RepositoryInMemory(ObservableCollection<T> collection)

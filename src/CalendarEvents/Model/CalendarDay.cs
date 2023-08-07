@@ -1,10 +1,17 @@
-﻿namespace Model;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+
+namespace Model;
 
 /// <summary>
 /// Хранит информацию о дне в календаре.
 /// </summary>
-public class CalendarDay
+public class CalendarDay : ObservableObject
 {
+    /// <summary>
+    /// Хранит значение, указывающее, есть ли на день созданные задачи.
+    /// </summary>
+    private bool _hasTask;
+
     /// <summary>
     /// Создает экземпляр класса <see cref="CalendarDay" />.
     /// </summary>
@@ -30,4 +37,13 @@ public class CalendarDay
     /// Возвращает и задает значение, указывающее, что день действительно входит в текущий месяц.
     /// </summary>
     public bool IsDateOfMonth { get; set; }
+
+    /// <summary>
+    /// Возвращает и задает значение, указывающее, есть ли задачи на этот день.
+    /// </summary>
+    public bool HasTask
+    {
+        get => _hasTask;
+        set => SetProperty(ref _hasTask, value);
+    }
 }

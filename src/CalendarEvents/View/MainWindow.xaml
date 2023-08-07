@@ -6,18 +6,16 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:View"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Title="MainWindow"
+    Title="CalendarEvents"
     Width="1000"
     Height="700"
+    MinWidth="1000"
+    MinHeight="700"
+    Background="#FAFAFA"
+    Icon="Resources/Pictures/calendar_96x96.ico"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-    <Window.Resources>
-        <ResourceDictionary>
-            <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
-            <converters:IntToMonthConverter x:Key="IntToMonthConverter"/>
-        </ResourceDictionary>
-    </Window.Resources>
     <Grid>
-        <ContentControl Content="{Binding NavigationService.CurrentView}" />
+        <ContentControl Content="{Binding NavigationService.CurrentView}"/>
     </Grid>
 </Window>
