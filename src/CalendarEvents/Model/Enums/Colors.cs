@@ -2,6 +2,9 @@
 
 namespace Model.Enums;
 
+/// <summary>
+/// Перечисление цветов.
+/// </summary>
 public enum Colors
 {
     [Description("#FAFAFA")] Base,
