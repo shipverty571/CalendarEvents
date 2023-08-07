@@ -20,6 +20,7 @@
             </ResourceDictionary.MergedDictionaries>
             <converters:IntToMonthConverter x:Key="IntToMonthConverter"/>
             <converters:ColorToBrushConverter x:Key="ColorToBrushConverter"/>
+            <converters:BoolToTextDecorationConverter x:Key="BoolToTextDecorationConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -73,7 +74,8 @@
                                 Margin="16 0 0 0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
-                                Text="{Binding Title}"/>
+                                Text="{Binding Title}"
+                                TextDecorations="{Binding IsDone, Converter={StaticResource BoolToTextDecorationConverter}}"/>
                             <CheckBox
                                 Grid.Column="2"
                                 HorizontalAlignment="Right"
