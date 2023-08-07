@@ -35,7 +35,6 @@ public class EventsManagementVM : ObservableValidator, IDialogResultVMHelper
             .SelectMany(member => member.GetCustomAttributes(typeof (DescriptionAttribute), true).Cast<DescriptionAttribute>())
             .ToList();
         Colors = colorDesctiptions.Select(color => color.Description).ToList();
-        Title = "";
         
         AddEventCommand = new RelayCommand(AddEvent);
         CloseCommand = new RelayCommand(Close);
