@@ -44,7 +44,6 @@ public class CalendarVM : ObservableObject
     /// <summary>
     /// Создает экземпляр класса <see cref="CalendarVM" />.
     /// </summary>
-    /// <param name="navigationService">Сервис навигации пользовательских элементов управления.</param>
     /// <param name="dialogService">Сервис диалоговых окон.</param>
     /// <param name="eventRepository">Хранилище задач.</param>
     /// <param name="viewModelFactory">Фабрика ViewModel.</param>
