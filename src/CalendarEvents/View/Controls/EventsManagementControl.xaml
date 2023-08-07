@@ -136,16 +136,12 @@
                 DockPanel.Dock="Bottom"
                 Orientation="Horizontal">
                 <Button
-                    Width="90px"
-                    Height="30px"
                     Style="{StaticResource CustomButtonStyle}"
                     Margin="{StaticResource ControlsMargin}"
                     Command="{Binding CloseCommand}"
                     Content="Cancel"/>
                 <Button
                     Style="{StaticResource CustomButtonStyle}"
-                    Width="90px"
-                    Height="30px"
                     Margin="{StaticResource ControlsMargin}"
                     Command="{Binding AddEventCommand}"
                     Content="OK"/>
