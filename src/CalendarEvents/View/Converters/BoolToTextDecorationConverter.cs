@@ -5,6 +5,9 @@ using System.Windows.Data;
 
 namespace View.Converters;
 
+/// <summary>
+/// Представляет реализацию для конвертирования <see cref="bool" /> значений.
+/// </summary>
 public class BoolToTextDecorationConverter : IValueConverter
 {
     /// <summary>
