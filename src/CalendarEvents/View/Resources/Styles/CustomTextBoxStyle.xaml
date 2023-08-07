@@ -2,7 +2,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/Resources/Styles/TextStyle.xaml"/>
     </ResourceDictionary.MergedDictionaries>
-    <Style TargetType="TextBox" x:Key="CustomTextBoxStyle">
+    <Style x:Key="CustomTextBoxStyle" TargetType="TextBox">
         <Setter Property="Height" Value="25"/>
         <Setter Property="FontFamily" Value="{StaticResource RobotoLight}"/>
         <Setter Property="FontSize" Value="16"/>

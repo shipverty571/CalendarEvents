@@ -50,11 +50,11 @@
                     Style="{StaticResource RemoveButtonStyle}"/>
             </StackPanel>
             <ListBox
-                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                 Margin="{StaticResource ControlsMargin}"
                 Background="Transparent"
                 BorderThickness="0"
                 ItemsSource="{Binding CurrentEvents, UpdateSourceTrigger=PropertyChanged}"
+                ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                 SelectedItem="{Binding SelectedTask}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -76,8 +76,8 @@
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 Text="{Binding Title}"
-                                TextWrapping="Wrap"
-                                TextDecorations="{Binding IsDone, Converter={StaticResource BoolToTextDecorationConverter}}"/>
+                                TextDecorations="{Binding IsDone, Converter={StaticResource BoolToTextDecorationConverter}}"
+                                TextWrapping="Wrap"/>
                             <CheckBox
                                 Grid.Column="2"
                                 HorizontalAlignment="Right"
