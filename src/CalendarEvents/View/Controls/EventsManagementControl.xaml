@@ -28,7 +28,7 @@
                     Margin="{StaticResource ControlsMargin}"
                     Style="{StaticResource RegularBlackTextStyle}"
                     Text="Title: "/>
-                <TextBox Style="{StaticResource CustomTextBoxStyle}" Text="{Binding Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Style="{StaticResource CustomTextBoxStyle}" Text="{Binding Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap"/>
                 <TextBlock
                     Margin="{StaticResource ControlsMargin}"
                     Style="{StaticResource RegularBlackTextStyle}"
