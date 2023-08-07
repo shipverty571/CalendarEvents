@@ -17,6 +17,7 @@
                 <ResourceDictionary Source="../Resources/Styles/CustomButtonStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             <converters:ColorToBrushConverter x:Key="ColorToBrushConverter"/>
+            <converters:InverseBoolConverter x:Key="InverseBoolConverter"/>
         </ResourceDictionary>
     </UserControl.Resources>
     <Grid Margin="{StaticResource WindowMargin}">
@@ -34,6 +35,7 @@
                             <Setter Property="FontSize" Value="16"/>
                             <Setter Property="Foreground" Value="{StaticResource BlackColorBrush}"/>
                             <Setter Property="Margin" Value="{StaticResource ControlsMargin}"/>
+                            <Setter Property="Validation.ErrorTemplate" Value="{x:Null}" />
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="TextBox">
@@ -56,6 +58,11 @@
                                             <Trigger Property="IsFocused" Value="True">
                                                 <Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource PrimaryColorBrush}"/>
                                                 <Setter TargetName="Border" Property="BorderThickness" Value="0 0 0 2"/>
+                                            </Trigger>
+                                            <Trigger Property="Validation.HasError" Value="True">
+                                                <Setter Property="ToolTip"
+                                                        Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}" />
+                                                <Setter TargetName="Border" Property="Background" Value="{StaticResource ErrorColorBrush}" />
                                             </Trigger>
                                         </ControlTemplate.Triggers>
                                     </ControlTemplate>
@@ -141,6 +148,7 @@
                     Content="Cancel"
                     Style="{StaticResource CustomButtonStyle}"/>
                 <Button
+                    IsEnabled="{Binding HasErrors, Converter={StaticResource InverseBoolConverter}}"
                     Margin="{StaticResource ControlsMargin}"
                     Command="{Binding AddEventCommand}"
                     Content="OK"
