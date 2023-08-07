@@ -28,7 +28,6 @@ public partial class App : Application
         services.AddSingleton<CalendarVM>();
         services.AddTransient<EventsManagementVM>();
         services.AddTransient<MessageVM>();
-        services.AddSingleton<INavigationService, NavigationService>();
         services.AddSingleton<IDialogService, DialogService>();
         services.AddSingleton<EventRepository>();
         services.AddSingleton<Func<Type, ObservableObject>>(serviceProvider => viewModelType =>
